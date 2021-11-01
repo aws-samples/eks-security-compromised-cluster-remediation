@@ -6,12 +6,12 @@ Octank recently launched a new e-commerce site for selling socks. The site, alon
 
 Octank has been an appealing target for hackers in the past because of its popularity with consumers and its enormous wealth. You are concerned that the cluster was misconfigured, increasing the probability of a breach. You suspect that the cluster has already been compromised. Your job now is to: 
 
-	1. Review the security posture of the cluster
-	2. Find and isolate the breach
-	3. Formulate a theory about how or why it occurred
-	4. Collect evidence for a forensic investigation
-	5. Eliminate the threat to the environment
-	6. Implement security controls that decrease or eliminate a recurrence of the issue
+1. Review the security posture of the cluster
+2. Find and isolate the breach
+3. Formulate a theory about how or why it occurred
+4. Collect evidence for a forensic investigation
+5. Eliminate the threat to the environment
+6. Implement security controls that decrease or eliminate a recurrence of the issue
 
 ## The environment
 For this workshop, you will be given access to an AWS account with an EKS cluster. You will access that cluster through a Cloud9 workspace. A slightly modified version of the e-commerce application, [Sock Shop](https://microservices-demo.github.io/), has been deployed to the cluster and the EKS control plane logs have been enabled. Your first priority is to find and isolate the attack. 
@@ -42,7 +42,7 @@ The workshop is divided into different stages. In the [Identification]() stage y
 ## Conclusion
 You should come away from this workshop with a better sense of: 
 
-	1. What controls to put in place to mitigate risks to your Kubernetes clusters
-	2. How to monitor the environment
-	3. How to respond when there’s a security incident, e.g. how to collect evidence for a forensics investigation
-    4. The importance of a good incident response plan
+1. What controls to put in place to mitigate risks to your Kubernetes clusters
+2. How to monitor the environment
+3. How to respond when there’s a security incident, e.g. how to collect evidence for a forensics investigation
+4. The importance of a good incident response plan

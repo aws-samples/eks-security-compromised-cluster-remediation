@@ -90,7 +90,9 @@ eksctl completion bash >> ~/.bash_completion
 
 4. Download and deploy the Fluent Bit daemonset manifest to the cluster by running the following command:
 
-    `kubectl apply -f https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/fluent-bit/fluent-bit.yaml`
+    ```bash
+    kubectl apply -f https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/fluent-bit/fluent-bit.yaml
+    ```
 
 5. Validate the Fluent Bit deployment by entering the following command. Each node should have one pod named fluent-bit-\*.
 
@@ -111,27 +113,31 @@ The above steps create the following cluster resources:
 
 - List the newly created CloudWatch LogGroups.
 
-        aws logs describe-log-groups --query 'logGroups[*].logGroupName' | grep "container"
+    ```bash
+    aws logs describe-log-groups --query 'logGroups[*].logGroupName' | grep "container"
+    ```
 
 - Check the returned list of log groups should include the following:
 
-        /aws/containerinsights/{ClusterName}/application
-        /aws/containerinsights/{ClusterName}/host
-        /aws/containerinsights/{ClusterName}/dataplane
+    ```
+    /aws/containerinsights/{ClusterName}/application
+    /aws/containerinsights/{ClusterName}/host
+    /aws/containerinsights/{ClusterName}/dataplane
+    ```
 
-> There may be a delay in the creation of log groups and log streams.
+    > There may be a delay in the creation of log groups and log streams.
 
 ## Troubleshooting
 
 - If you don't see these log groups and are looking in the correct Region, check the logs of the Fluent Bit DaemonSet pods to look for the error.
 
-        kubectl logs fluent-bit-{unique-id}
+    `kubectl logs fluent-bit-{unique-id}`
 
 - If you see errors related to IAM permissions, check the IAM role attached to the cluster nodes or fluent-bit IAM service account.
 
 - If the pod status is CreateContainerConfigError, get the exact error by running the following command.
 
-        kubectl describe pod {pod_name} -n amazon-cloudwatch
+    `kubectl describe pod {pod_name} -n amazon-cloudwatch`
 
 # Additional Information:
 
