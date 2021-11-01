@@ -24,25 +24,25 @@ Before we can remove the static pod we must identify the node(s) running a stati
 
 1. Using `kubectl` we can find a static pod by looking for pods with names that include a host-name suffix and that we are unable to delete using standard kubectl commands.
 
-        ```bash
-        kubectl get pod -o wide --all-namespaces
+```bash
+kubectl get pod -o wide --all-namespaces
 
-        NAMESPACE           NAME                                 READY   STATUS    RESTARTS   AGE     IP             NODE                           NOMINATED NODE   READINESS GATES
-        sock-shop           carts-844bf95d46-6jj4t               1/1     Running   0          19h     10.0.188.63    ip-10-0-191-117.ec2.internal   <none>           <none>
-        sock-shop           carts-db-6c6c68b747-45q45            1/1     Running   0          19h     10.0.175.174   ip-10-0-179-247.ec2.internal   <none>           <none>
-        sock-shop           catalogue-759cc6b86-lj5ws            1/1     Running   0          19h     10.0.155.171   ip-10-0-179-247.ec2.internal   <none>           <none>
-        sock-shop           catalogue-db-96f6f6b4c-mrn7v         1/1     Running   0          19h     10.0.133.74    ip-10-0-191-117.ec2.internal   <none>           <none>
-        sock-shop           front-end-75cf5f5cbc-c8klp           1/1     Running   0          19h     10.0.186.193   ip-10-0-179-247.ec2.internal   <none>           <none>
-        sock-shop           orders-7664c64d75-lllzk              1/1     Running   0          19h     10.0.155.232   ip-10-0-191-117.ec2.internal   <none>           <none>
-        sock-shop           orders-db-659949975f-xm2mg           1/1     Running   0          19h     10.0.159.186   ip-10-0-179-247.ec2.internal   <none>           <none>
-        sock-shop           payment-7bcdbf45c9-r96pw             1/1     Running   0          19h     10.0.232.255   ip-10-0-250-148.ec2.internal   <none>           <none>
-        sock-shop           queue-master-5f6d6d4796-j9wx7        1/1     Running   0          19h     10.0.164.241   ip-10-0-179-247.ec2.internal   <none>           <none>
-        sock-shop           rabbitmq-57dd566589-q4nwg            2/2     Running   0          16m     10.0.169.201   ip-10-0-191-117.ec2.internal   <none>           <none>
-        sock-shop           rship-ip-10-0-250-148.ec2.internal   1/1     Running   0          126m    10.0.250.35    ip-10-0-250-148.ec2.internal   <none>           <none>
-        sock-shop           session-db-7cf97f8d4f-nr2nn          1/1     Running   0          19h     10.0.150.22    ip-10-0-179-247.ec2.internal   <none>           <none>
-        sock-shop           shipping-7f7999ffb7-5xqq6            1/1     Running   0          19h     10.0.183.255   ip-10-0-191-117.ec2.internal   <none>           <none>
-        sock-shop           user-68df64db9c-zb8nj                1/1     Running   0          19h     10.0.158.68    ip-10-0-191-117.ec2.internal   <none>           <none>
-        sock-shop           user-db-6df7444fc-67hps              1/1     Running   0          19h     10.0.251.227   ip-10-0-250-148.ec2.internal   <none>           <none>
+NAMESPACE           NAME                                 READY   STATUS    RESTARTS   AGE     IP             NODE                           NOMINATED NODE   READINESS GATES
+sock-shop           carts-844bf95d46-6jj4t               1/1     Running   0          19h     10.0.188.63    ip-10-0-191-117.ec2.internal   <none>           <none>
+sock-shop           carts-db-6c6c68b747-45q45            1/1     Running   0          19h     10.0.175.174   ip-10-0-179-247.ec2.internal   <none>           <none>
+sock-shop           catalogue-759cc6b86-lj5ws            1/1     Running   0          19h     10.0.155.171   ip-10-0-179-247.ec2.internal   <none>           <none>
+sock-shop           catalogue-db-96f6f6b4c-mrn7v         1/1     Running   0          19h     10.0.133.74    ip-10-0-191-117.ec2.internal   <none>           <none>
+sock-shop           front-end-75cf5f5cbc-c8klp           1/1     Running   0          19h     10.0.186.193   ip-10-0-179-247.ec2.internal   <none>           <none>
+sock-shop           orders-7664c64d75-lllzk              1/1     Running   0          19h     10.0.155.232   ip-10-0-191-117.ec2.internal   <none>           <none>
+sock-shop           orders-db-659949975f-xm2mg           1/1     Running   0          19h     10.0.159.186   ip-10-0-179-247.ec2.internal   <none>           <none>
+sock-shop           payment-7bcdbf45c9-r96pw             1/1     Running   0          19h     10.0.232.255   ip-10-0-250-148.ec2.internal   <none>           <none>
+sock-shop           queue-master-5f6d6d4796-j9wx7        1/1     Running   0          19h     10.0.164.241   ip-10-0-179-247.ec2.internal   <none>           <none>
+sock-shop           rabbitmq-57dd566589-q4nwg            2/2     Running   0          16m     10.0.169.201   ip-10-0-191-117.ec2.internal   <none>           <none>
+sock-shop           rship-ip-10-0-250-148.ec2.internal   1/1     Running   0          126m    10.0.250.35    ip-10-0-250-148.ec2.internal   <none>           <none>
+sock-shop           session-db-7cf97f8d4f-nr2nn          1/1     Running   0          19h     10.0.150.22    ip-10-0-179-247.ec2.internal   <none>           <none>
+sock-shop           shipping-7f7999ffb7-5xqq6            1/1     Running   0          19h     10.0.183.255   ip-10-0-191-117.ec2.internal   <none>           <none>
+sock-shop           user-68df64db9c-zb8nj                1/1     Running   0          19h     10.0.158.68    ip-10-0-191-117.ec2.internal   <none>           <none>
+sock-shop           user-db-6df7444fc-67hps              1/1     Running   0          19h     10.0.251.227   ip-10-0-250-148.ec2.internal   <none>           <none>
         ```
 
         Notice the pod named `rship-ip-10-0-250-148.ec2.internal` in the `sock-shop` NAMESPACE. The pod has an EC2 host-name appended to it, in this case `-ip-10-0-250-148.ec2.internal`.
