@@ -22,8 +22,9 @@ We will use your AWS Cloud9 workspace to execute this lab. Here is a list of sof
 
 Before we can remove the static pod we must identify the node(s) running a static pod.
 
-1.  Using `kubectl` we can find a static pod by looking for pods with names that include a host-name suffix and that we are unable to delete using standard kubectl commands.
+1. Using `kubectl` we can find a static pod by looking for pods with names that include a host-name suffix and that we are unable to delete using standard kubectl commands.
 
+        ```bash
         kubectl get pod -o wide --all-namespaces
 
         NAMESPACE           NAME                                 READY   STATUS    RESTARTS   AGE     IP             NODE                           NOMINATED NODE   READINESS GATES
@@ -42,26 +43,32 @@ Before we can remove the static pod we must identify the node(s) running a stati
         sock-shop           shipping-7f7999ffb7-5xqq6            1/1     Running   0          19h     10.0.183.255   ip-10-0-191-117.ec2.internal   <none>           <none>
         sock-shop           user-68df64db9c-zb8nj                1/1     Running   0          19h     10.0.158.68    ip-10-0-191-117.ec2.internal   <none>           <none>
         sock-shop           user-db-6df7444fc-67hps              1/1     Running   0          19h     10.0.251.227   ip-10-0-250-148.ec2.internal   <none>           <none>
+        ```
 
-    Notice the pod named `rship-ip-10-0-250-148.ec2.internal` in the `sock-shop` NAMESPACE. The pod has an EC2 host-name appended to it, in this case `-ip-10-0-250-148.ec2.internal`.
+        Notice the pod named `rship-ip-10-0-250-148.ec2.internal` in the `sock-shop` NAMESPACE. The pod has an EC2 host-name appended to it, in this case `-ip-10-0-250-148.ec2.internal`.
 
-    This command will report pods where a host-name using the Amazon EC2 private DNS naming convention has been appended to the pod name.
+        This command will report pods where a host-name using the Amazon EC2 private DNS naming convention has been appended to the pod name.
 
-         kubectl get pod --all-namespaces | grep -E -o '\s+[a-z].*-ip-[0-9]{1,3}\-[0-9]{1,3}\-[0-9]{1,3}\-[0-9]{1,3}.ec2.internal\b'
+        ```bash
+        kubectl get pod --all-namespaces | grep -E -o '\s+[a-z].*-ip-[0-9]{1,3}\-[0-9]{1,3}\-[0-9]{1,3}\-[0-9]{1,3}.ec2.internal\b'
 
-                     rship-ip-10-0-250-148.ec2.internal
+        rship-ip-10-0-250-148.ec2.internal
+        ```
 
     If you try to delete that pod, you will notice that you cannot. Notice the age has not decreased and the status is running.
 
+        ```bash
         kubectl -n sock-shop delete pod rship-ip-10-0-250-148.ec2.internal
 
         kubectl -n sock-shop get pods rship-ip-10-0-250-148.ec2.internal -o wide
 
         NAME                                 READY   STATUS    RESTARTS   AGE    IP            NODE                           NOMINATED NODE   READINESS GATES
         rship-ip-10-0-250-148.ec2.internal   1/1     Running   0          129m   10.0.250.35   ip-10-0-250-148.ec2.internal   <none>           <none>
+        ```
 
-2.  We will remove the static pod manifest from the worker nodes using [AWS Systems Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/what-is-systems-manager.html "AWS SSM Documentation") (SSM). Once the manifest is removed, the kubelet will delete the static pod. We have provided a simple shell script that uses SSM to execute the Linux `rm` command on the worker nodes in the cluster. In your Cloud9 environment create a new file by selecting "New File" from the "File" menu. Copy and paste the following shell script into the new file. Save the file with the name "rm-static-pods.sh".
+2. We will remove the static pod manifest from the worker nodes using [AWS Systems Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/what-is-systems-manager.html "AWS SSM Documentation") (SSM). Once the manifest is removed, the kubelet will delete the static pod. We have provided a simple shell script that uses SSM to execute the Linux `rm` command on the worker nodes in the cluster. In your Cloud9 environment create a new file by selecting "New File" from the "File" menu. Copy and paste the following shell script into the new file. Save the file with the name "rm-static-pods.sh".
 
+        ```bash
         #!/bin/bash
         instances=$(kubectl get nodes -o json | grep providerID | awk -F '/' '{print $NF}' | sed "s/\"//g" | tr '\n' ' ')
         echo "Worker Node Instance IDs:"
@@ -85,13 +92,16 @@ Before we can remove the static pod we must identify the node(s) running a stati
 
         sleep 3
         kubectl get pods -o wide -n sock-shop
+        ```
 
-    After saving the file, in your Cloud9 terminal you can run the script with this command
+        After saving the file, in your Cloud9 terminal you can run the script with this command
 
-        /bin/bash ./rm-static-pods.sh
+        `/bin/bash ./rm-static-pods.sh`
 
-3.  Verify the static pod has been deleted. The shell script should end by displaying all running pods in the cluster. You can confirm that the static pod was deleted by reviewing the output of the shell script, or use `kubectl` to get the static pod name identified in step #1.
+3. Verify the static pod has been deleted. The shell script should end by displaying all running pods in the cluster. You can confirm that the static pod was deleted by reviewing the output of the shell script, or use `kubectl` to get the static pod name identified in step #1.
 
+        ```bash
         kubectl -n sock-shop get pod rship-ip-10-0-250-148.ec2.internal
 
         Error from server (NotFound): pods "rship-ip-10-0-250-148.ec2.internal" not found
+        ```
