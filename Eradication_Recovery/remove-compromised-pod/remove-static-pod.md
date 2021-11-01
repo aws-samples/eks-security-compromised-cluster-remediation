@@ -14,9 +14,9 @@ More information about static pods can be found in the [Kubernetes documentation
 
 We will use your AWS Cloud9 workspace to execute this lab. Here is a list of software that we will use in this lab.
 
-1.  [jq](https://www.eksworkshop.com/020_prerequisites/k8stools/#install-jq-envsubst-from-gnu-gettext-utilities-and-bash-completion "jq and other tools")
-2.  [kubectl](https://www.eksworkshop.com/020_prerequisites/k8stools/#install-kubectl "install kubectl")
-3.  [The AWS CLI](https://www.eksworkshop.com/020_prerequisites/k8stools/#update-awscli "AWS CLI installation")
+1. [jq](https://www.eksworkshop.com/020_prerequisites/k8stools/#install-jq-envsubst-from-gnu-gettext-utilities-and-bash-completion "jq and other tools")
+2. [kubectl](https://www.eksworkshop.com/020_prerequisites/k8stools/#install-kubectl "install kubectl")
+3. [The AWS CLI](https://www.eksworkshop.com/020_prerequisites/k8stools/#update-awscli "AWS CLI installation")
 
 ## Removing a Static Pod
 
