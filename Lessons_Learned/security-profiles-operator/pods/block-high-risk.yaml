@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: block-high-risk
+  namespace: seccomp-test
+  annotations:
+    description: >-
+      Test pod to block high-risk syscalls.
+spec:
+  securityContext:
+    seccompProfile:
+      type: Localhost
+      localhostProfile: operator/seccomp-test/profile-complain-block-high-risk.json
+  containers:
+    - name: block-high-risk-container
+      image: nginx
+

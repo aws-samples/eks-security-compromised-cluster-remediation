@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "2.2",
+  "description": "Use this document to collect forensic evidence from a compromised node",
+  "parameters": {
+    "Namespace": {
+      "description": "(Required) Specify the namespace of the compromised pod.",
+      "type": "String"
+    },
+    "PodName": {
+      "type": "String",
+      "description": "(Required) Specify the compromised pod's name."
+    },
+    "DestinationBucket": {
+      "type": "String",
+      "description": "(Required) Specify the name of the bucket to store evidence"
+    },
+    "ClusterName": {
+      "type": "String",
+      "description": "(Required) Specify the name of the EKS cluster"
+    },
+    "Verbose": {
+      "type": "String",
+      "description": "(Optional) Set the verbosity level for logging Playbook executions. Specify -v for low verbosity, -vv or –vvv for medium verbosity, and -vvvv for debug level.",
+      "allowedValues": [
+        "-v",
+        "-vv",
+        "-vvv",
+        "-vvvv"
+      ],
+      "default": "-v"
+    },
+    "TimeoutSeconds": {
+      "type": "String",
+      "description": "(Optional) The time in seconds for a command to be completed before it is considered to have failed.",
+      "default": "3600"
+    }
+  },
+  "mainSteps": [
+    {
+      "action": "aws:runShellScript",
+      "name": "runShellScript",
+      "inputs": {
+        "timeoutSeconds": "{{ TimeoutSeconds }}",
+        "runCommand": [
+            "#!/bin/bash",
+            "export NAMESPACE={{ Namespace }}",
+            "export POD_NAME={{ PodName }}",
+            "export DEST_BUCKET={{ DestinationBucket }}",
+            "export CLUSTER_NAME={{ ClusterName }}",
+
+            "TOKEN=$(curl -X PUT \"http://169.254.169.254/latest/api/token\" -H \"X-aws-ec2-metadata-token-ttl-seconds: 21600\")",
+            "REGION=$(curl -s -H \"X-aws-ec2-metadata-token: $TOKEN\" http://169.254.169.254/latest/meta-data/placement/region)",
+            "VERSION=$(aws eks describe-cluster --name $CLUSTER_NAME --region $REGION | jq -r .cluster.version)",
+            "sudo curl -LO --output-dir /usr/local/bin https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl",
+            "sudo curl -LO --output-dir /usr/local/bin https://github.com/microsoft/avml/releases/download/v0.3.0/avml",
+            "sudo chmod +x /usr/local/bin/avml",
+            "sudo chmod +x /usr/local/bin/kubectl",
+            "sudo aws eks update-kubeconfig --name $CLUSTER_NAME --region $REGION",
+
+            "pods=$(sudo /usr/local/bin/kubectl get pods --all-namespaces -o jsonpath='{.items[*].metadata.name}' --field-selector spec.nodeName=$(hostname))",
+            "[[ \" ${pods[*]} \" =~ \" ${POD_NAME} \" ]] || (echo \"not found: $POD_NAME\" && exit 1)",
+
+            "if [[ -z \"${SUBPATH}\" ]]; then",
+            "  export SUBPATH=\"forensics\"",
+            "fi",
+
+            "echo Namespace: $NAMESPACE",
+            "echo Pod Name: $POD_NAME",
+            "echo Subpath: $SUBPATH",
+            "echo Destination Bucket: $DEST_BUCKET",
+
+            "export timestamp=$(date +%s)",
+
+            "local_dest_dir=/forensics/${SUBPATH}/${timestamp}",
+            "sudo mkdir -p ${local_dest_dir}",
+
+            "sudo /usr/local/bin/kubectl describe pod ${POD_NAME} -n ${NAMESPACE} | sudo tee ${local_dest_dir}/${POD_NAME}.txt > /dev/null",
+            "sudo /usr/local/bin/kubectl get pod ${POD_NAME} -n ${NAMESPACE} -o yaml | sudo tee ${local_dest_dir}/${POD_NAME}.yaml > /dev/null",
+            "sudo /usr/local/bin/avml ${local_dest_dir}/memory.dmp",
+
+            "for i in $(sudo /usr/local/bin/kubectl get pod -n ${NAMESPACE} ${POD_NAME} -o jsonpath='{.status.containerStatuses[*].containerID}') ; do",
+            "  CONTAINER_ID=$(echo $i | sed -e 's/docker:\\/\\///g')",
+            "  sudo docker inspect $CONTAINER_ID | sudo tee ${local_dest_dir}/${POD_NAME}-${CONTAINER_ID}-inspect.json > /dev/null",
+            "  sudo docker diff $CONTAINER_ID | sudo tee ${local_dest_dir}/${POD_NAME}-${CONTAINER_ID}-diff.txt > /dev/null",
+            "  sudo docker export $CONTAINER_ID --output=${local_dest_dir}/${POD_NAME}-${CONTAINER_ID}-export.tar",
+            "done",
+
+            "#copy files to an S3 bucket",
+            "for file in ${local_dest_dir}/*",
+            "do",
+            "  sudo aws s3 cp ${file} s3://${DEST_BUCKET}/${SUBPATH}/${timestamp}_${NAMESPACE}_${POD_NAME}/ --acl bucket-owner-full-control",
+            "done",
+
+            "#cleanup",
+            "rm -rf ${local_dest_dir}",
+            "rm -rf ~/.kube",
+            "rm -rf /root/.kube",
+            "sudo rm /usr/local/bin/kubectl",
+            "sudo rm /usr/local/bin/avml"
+        ]
+      }
+    }
+  ]
+}

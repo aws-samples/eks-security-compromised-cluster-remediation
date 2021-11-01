@@ -1,0 +1,16 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sDepHostFilesystem
+metadata:
+  name: dep-host-filesystem
+spec:
+  match:
+    kinds:
+      - apiGroups: ["apps"]
+        kinds: ["Deployment"]
+    namespaces: ["test"]
+  parameters:
+    allowedHostPaths:
+    - readOnly: true
+      pathPrefix: "/foo"
+    ops: ["CREATE","UPDATE"]
+    errMsg: "INVALID_HOST_FILESYSTEM_USAGE"

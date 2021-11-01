@@ -1,0 +1,16 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sDepHostNetworkingPorts
+metadata:
+  name: dep-host-network-ports
+spec:
+  match:
+    kinds:
+      - apiGroups: ["apps"]
+        kinds: ["Deployment"]
+    namespaces: ["test"]
+  parameters:
+    hostNetwork: false
+    min: 8080
+    max: 9090
+    ops: ["CREATE","UPDATE"]
+    errMsg: "INVALID_HOST_NETWORK"

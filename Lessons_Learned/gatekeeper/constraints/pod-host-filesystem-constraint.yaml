@@ -1,0 +1,16 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sPodHostFilesystem
+metadata:
+  name: pod-host-filesystem
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    namespaces: ["test"]
+  parameters:
+    allowedHostPaths:
+    - readOnly: true
+      pathPrefix: "/foo"
+    ops: ["CREATE","UPDATE"]
+    errMsg: "INVALID_HOST_FILESYSTEM_USAGE"
