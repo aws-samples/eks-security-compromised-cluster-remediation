@@ -111,13 +111,17 @@ The above steps create the following cluster resources:
 
 - List the newly created CloudWatch LogGroups.
 
-        aws logs describe-log-groups --query 'logGroups[*].logGroupName' | grep "container"
+    ```bash
+    aws logs describe-log-groups --query 'logGroups[*].logGroupName' | grep "container"
+    ```
 
 - Check the returned list of log groups should include the following:
 
-        /aws/containerinsights/{ClusterName}/application
-        /aws/containerinsights/{ClusterName}/host
-        /aws/containerinsights/{ClusterName}/dataplane
+    ```
+    /aws/containerinsights/{ClusterName}/application
+    /aws/containerinsights/{ClusterName}/host
+    /aws/containerinsights/{ClusterName}/dataplane
+    ```
 
 > There may be a delay in the creation of log groups and log streams.
 
@@ -125,13 +129,13 @@ The above steps create the following cluster resources:
 
 - If you don't see these log groups and are looking in the correct Region, check the logs of the Fluent Bit DaemonSet pods to look for the error.
 
-        kubectl logs fluent-bit-{unique-id}
+    `kubectl logs fluent-bit-{unique-id}`
 
 - If you see errors related to IAM permissions, check the IAM role attached to the cluster nodes or fluent-bit IAM service account.
 
 - If the pod status is CreateContainerConfigError, get the exact error by running the following command.
 
-        kubectl describe pod {pod_name} -n amazon-cloudwatch
+    `kubectl describe pod {pod_name} -n amazon-cloudwatch`
 
 # Additional Information:
 
