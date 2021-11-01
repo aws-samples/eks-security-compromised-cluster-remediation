@@ -42,7 +42,7 @@ Before we can remove the static pod we must identify the node(s) running a stati
     sock-shop           user-db-6df7444fc-67hps              1/1     Running   0          19h     10.0.251.227   ip-10-0-250-148.ec2.internal   <none>           <none>
     ```
 
-Notice the pod named `rship-ip-10-0-250-148.ec2.internal` in the `sock-shop` NAMESPACE. The pod has an EC2 host-name appended to it, in this case `-ip-10-0-250-148.ec2.internal`.
+    Notice the pod named `rship-ip-10-0-250-148.ec2.internal` in the `sock-shop` NAMESPACE. The pod has an EC2 host-name appended to it, in this case `-ip-10-0-250-148.ec2.internal`.
 
     This command will report pods where a host-name using the Amazon EC2 private DNS naming convention has been appended to the pod name.
     
@@ -52,7 +52,7 @@ Notice the pod named `rship-ip-10-0-250-148.ec2.internal` in the `sock-shop` NAM
     rship-ip-10-0-250-148.ec2.internal
     ```
 
-If you try to delete that pod, you will notice that you cannot. Notice the age has not decreased and the status is running.
+    If you try to delete that pod, you will notice that you cannot. Notice the age has not decreased and the status is running.
 
     ```bash
     kubectl -n sock-shop delete pod rship-ip-10-0-250-148.ec2.internal
@@ -91,7 +91,7 @@ If you try to delete that pod, you will notice that you cannot. Notice the age h
     kubectl get pods -o wide -n sock-shop
     ```
 
-After saving the file, in your Cloud9 terminal you can run the script with this command
+    After saving the file, in your Cloud9 terminal you can run the script with this command
 
     `/bin/bash ./rm-static-pods.sh`
 
