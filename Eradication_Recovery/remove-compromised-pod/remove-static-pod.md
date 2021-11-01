@@ -43,7 +43,7 @@ sock-shop           session-db-7cf97f8d4f-nr2nn          1/1     Running   0    
 sock-shop           shipping-7f7999ffb7-5xqq6            1/1     Running   0          19h     10.0.183.255   ip-10-0-191-117.ec2.internal   <none>           <none>
 sock-shop           user-68df64db9c-zb8nj                1/1     Running   0          19h     10.0.158.68    ip-10-0-191-117.ec2.internal   <none>           <none>
 sock-shop           user-db-6df7444fc-67hps              1/1     Running   0          19h     10.0.251.227   ip-10-0-250-148.ec2.internal   <none>           <none>
-        ```
+```
 
         Notice the pod named `rship-ip-10-0-250-148.ec2.internal` in the `sock-shop` NAMESPACE. The pod has an EC2 host-name appended to it, in this case `-ip-10-0-250-148.ec2.internal`.
 
