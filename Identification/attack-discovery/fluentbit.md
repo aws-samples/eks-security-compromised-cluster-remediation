@@ -90,7 +90,9 @@ eksctl completion bash >> ~/.bash_completion
 
 4. Download and deploy the Fluent Bit daemonset manifest to the cluster by running the following command:
 
-    `kubectl apply -f https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/fluent-bit/fluent-bit.yaml`
+    ```bash
+    kubectl apply -f https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/fluent-bit/fluent-bit.yaml
+    ```
 
 5. Validate the Fluent Bit deployment by entering the following command. Each node should have one pod named fluent-bit-\*.
 
@@ -123,7 +125,7 @@ The above steps create the following cluster resources:
     /aws/containerinsights/{ClusterName}/dataplane
     ```
 
-> There may be a delay in the creation of log groups and log streams.
+    > There may be a delay in the creation of log groups and log streams.
 
 ## Troubleshooting
 
