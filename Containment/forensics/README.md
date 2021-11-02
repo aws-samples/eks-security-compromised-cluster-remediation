@@ -28,7 +28,7 @@ We've created an SSM Document that incorporates the functionality of kube-forens
     aws ssm create-document \
     --content file://ssm-document.json \
     --name “forensics-capture” \
-    --document-type “Automation” \
+    --document-type “Command” \
     --document-format JSON
     --target-type /AWS::EC2::Instance
     ```
