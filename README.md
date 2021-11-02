@@ -16,6 +16,8 @@ Octank has been an appealing target for hackers in the past because of its popul
 ## The environment
 For this workshop, you will be given access to an AWS account with an EKS cluster. You will access that cluster through a Cloud9 workspace. A slightly modified version of the e-commerce application, [Sock Shop](https://microservices-demo.github.io/), has been deployed to the cluster and the EKS control plane logs have been enabled. Your first priority is to find and isolate the attack. 
 
+The Cloud9 workspace has been granted access to the Kubernetes API and is able to start an SSH session with all the worker nodes in the cluster. An S3 bucket for storing forensic data has also been created and is exposed via the $FORENSICS_S3_BUCKET environment variable.
+
 ### The cluster
 An EKS cluster has been provisioned in the us-west-2 region. The cluster's 3 worker nodes are distributed across 3 private subnets in the cluster VPC and are part of a [managed node group](https://docs.aws.amazon.com/eks/latest/userguide/managed-node-groups.html). The cluster API endpoint, i.e. the Kubernetes API, is accessible from within the VPC and the Internet. Access to the API server is secured using a combination of AWS Identity and Access Management (IAM) and native Kubernetes Role Based Access Control (RBAC). 
 
