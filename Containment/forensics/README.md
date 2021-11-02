@@ -36,7 +36,7 @@ We've created an SSM Document that incorporates the functionality of kube-forens
 3. Run the Document against an instance by executing the following command: 
 
     ```bash
-    aws ssm send-command --document-name "forensics-capture" --document-version "1" --targets '[{"Key":"InstanceIds","Values":["<INSTANCE_ID>"]}]' --parameters '{"Verbose":["-v"],"TimeoutSeconds":["3600"],"Namespace":["<NAMESPACE>"],"PodName":["<POD_NAME>"],"DestinationBucket":["<DEST_BUCKET>"],"ClusterName":["<CLUSTER_NAME>"]}' --timeout-seconds 600 --max-concurrency "50" --max-errors "0" --output-s3-bucket-name "<LOGGING_BUCKET>" --region us-east-2
+    aws ssm send-command --document-name "forensics-capture" --document-version "1" --targets '[{"Key":"InstanceIds","Values":["<INSTANCE_ID>"]}]' --parameters '{"Verbose":["-v"],"TimeoutSeconds":["3600"],"Namespace":["<NAMESPACE>"],"PodName":["<POD_NAME>"],"DestinationBucket":["<DEST_BUCKET>"],"ClusterName":["<CLUSTER_NAME>"]}' --timeout-seconds 600 --max-concurrency "50" --max-errors "0" --output-s3-bucket-name "<LOGGING_BUCKET>" --region <AWS_REGION>
     ```
 
 > The LOGGING_BUCKET is for storing the output from Run Command. For simplicity, you can use the DEST_BUCKET as the logging bucket. 
