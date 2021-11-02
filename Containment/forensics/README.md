@@ -29,7 +29,7 @@ We've created an SSM Document that incorporates the functionality of kube-forens
     --content file://ssm-document.json \
     --name “forensics-capture” \
     --document-type “Command” \
-    --document-format JSON
+    --document-format JSON \
     --target-type /AWS::EC2::Instance
     ```
 
