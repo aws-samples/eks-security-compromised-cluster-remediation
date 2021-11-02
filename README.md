@@ -40,7 +40,7 @@ Your first “hint” is to increase your visibility of the cluster and its conf
 The workshop is divided into different stages. In the [Identification](./Identification) stage you will implement solutions that will increase your visibility of the cluster, its configuration, and the workloads that are running on it. The idea is to determine whether your cluster has been compromised and how. In the [Containment](./Containment) phase you will isolate the compromise and capture evidence from the environment that can be used in a forensics investigation. In the [Eradication and Recovery](./Eradication_Recovery) stage you will remediate the compromised pod and eliminate the threat to your cluster. And finally in the [Implement Countermeasures](./Implement_Countermeasures) phase you will take stock of what has happened and implement a set of security controls, e.g. OPA/Gatekeeper, Falco, and the Security Profiles Operator, to lower the odds of a recurrence. 
 
 ## Capture the flag challenge (optional)
-The attacker has left a message for you. As an additional challege find the attacker's bitcoin account number. 
+The attacker has left a message for you. If you want an additional challenge, find the attacker's bitcoin account number. 
 
 ## Conclusion
 You should come away from this workshop with a better sense of: 
