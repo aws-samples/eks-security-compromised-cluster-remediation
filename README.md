@@ -27,9 +27,16 @@ Sock Shop is a e-commerce application that consists of a multitude of microservi
 ![](./images/app-architecture.png)
 
 ## Instructions
-The bulk of this workshop is unguided in that you will decide how to respond to the unfolding security incident at Octank. The workshop’s proctors will be available to periodically give you clues when needed or you can look at the workshop’s GitHub repository for additional guidance. Once you’ve isolated and/or eliminated the threat from the cluster, you can follow the directions for implementing a few countermeasures that will enhance the security posture of your EKS cluster. This includes implementing OPA Gatekeeper, Falco and Falco Sidekick, and the Security Policy controller.  
+The bulk of this workshop is unguided in that you will decide how to respond to the unfolding security incident at Octank. The workshop’s proctors will be available to periodically give you clues when needed or you can look at the workshop’s [GitHub](https://github.com/aws-samples/eks-security-compromised-cluster-remediation) repository for additional guidance. Once you’ve isolated and/or eliminated the threat from the cluster, you can follow the directions for implementing a few countermeasures that will enhance the security posture of your EKS cluster. This includes implementing OPA Gatekeeper, Falco and Falco Sidekick, and the Security Policy controller.
 
 You will have approximately 2 hours to complete the workshop. 
+
+### Clone this GitHub repository
+Start this workshop by cloning this repository to your Cloud9 workspace. 
+
+```bash
+git clone https://github.com/aws-samples/eks-security-compromised-cluster-remediation.git
+```
 
 ## Resources & hints
 Aside from this GitHub repository, feel free to use the [EKS Best Practices Guide for Security](https://aws.github.io/aws-eks-best-practices/security/docs/), the official Kubernetes documentation, or other external resources for ideas about how to respond. 
