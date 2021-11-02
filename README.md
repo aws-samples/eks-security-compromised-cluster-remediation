@@ -27,7 +27,7 @@ Sock Shop is a e-commerce application that consists of a multitude of microservi
 ![](./images/app-architecture.png)
 
 ## Instructions
-The bulk of this workshop is unguided in that you will decide how to respond to the unfolding security incident at Octank. The workshop’s proctors will be available to periodically give you clues when needed or you can look at the workshop’s GitHub repository for additional guidance. Once you’ve isolated and/or eliminated the threat from the cluster, you can follow the directions for implementing a set of controls to enhance the security posture of your EKS cluster. This includes implementing OPA Gatekeeper to enforce a set of security policies. It also involves implementing Falco and Falco Sidekick for improving runtime visibility and protection.  
+The bulk of this workshop is unguided in that you will decide how to respond to the unfolding security incident at Octank. The workshop’s proctors will be available to periodically give you clues when needed or you can look at the workshop’s GitHub repository for additional guidance. Once you’ve isolated and/or eliminated the threat from the cluster, you can follow the directions for implementing a few countermeasures that will enhance the security posture of your EKS cluster. This includes implementing OPA Gatekeeper, Falco and Falco Sidekick, and the Security Policy controller.  
 
 You will have approximately 2 hours to complete the workshop. 
 
@@ -38,6 +38,9 @@ Your first “hint” is to increase your visibility of the cluster and its conf
 
 ## Workshop Flow
 The workshop is divided into different stages. In the [Identification](./Identification) stage you will implement solutions that will increase your visibility of the cluster, its configuration, and the workloads that are running on it. The idea is to determine whether your cluster has been compromised and how. In the [Containment](./Containment) phase you will isolate the compromise and capture evidence from the environment that can be used in a forensics investigation. In the [Eradication and Recovery](./Eradication_Recovery) stage you will remediate the compromised pod and eliminate the threat to your cluster. And finally in the [Implement Countermeasures](./Implement_Countermeasures) phase you will take stock of what has happened and implement a set of security controls, e.g. OPA/Gatekeeper, Falco, and the Security Profiles Operator, to lower the odds of a recurrence. 
+
+## Capture the flag challenge (optional)
+The attacker has left a message for you. As an additional challege find the attacker's bitcoin account number. 
 
 ## Conclusion
 You should come away from this workshop with a better sense of: 
