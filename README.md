@@ -58,3 +58,11 @@ You should come away from this workshop with a better sense of:
 2. How to monitor the environment
 3. How to respond when there’s a security incident, e.g. how to collect evidence for a forensics investigation
 4. The importance of a good incident response plan
+
+## Additional Resources
+- [Cloud Native Security](https://cnsmap.netlify.app/) Map, explores Cloud Native Security concepts and how they are used
+- [Amazon EKS Best Practices Guide for Security](https://aws.github.io/aws-eks-best-practices/security/docs/), provides advice about protecting information, systems, and assets that are reliant on EKS while delivering business value through risk assessments and mitigation strategies
+- [KUBESEC.IO](https://kubesec.io/), recommended pod security settings
+- [Cloud Native Security Whitepaper](https://github.com/cncf/tag-security/blob/main/security-whitepaper/cloud-native-security-whitepaper.md) (2020), provides organizations with a clear understanding of cloud native security
+- [OWASP Kubernetes Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Kubernetes_Security_Cheat_Sheet.html)
+- [kubeaudit](https://github.com/Shopify/kubeaudit), a command line tool and a Go package to audit Kubernetes clusters for various different security concerns
