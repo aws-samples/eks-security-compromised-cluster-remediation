@@ -51,6 +51,8 @@ The workshop is divided into different stages. In the [Identification](./Identif
 ## Capture the flag challenge (optional)
 The attacker has left a message for you. If you want an additional challenge, find the attacker's bitcoin account number. 
 
+**Hint**: follow the white rabbit
+
 ## Conclusion
 You should come away from this workshop with a better sense of: 
 
