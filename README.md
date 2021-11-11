@@ -33,13 +33,6 @@ The bulk of this workshop is unguided in that you will decide how to respond to 
 
 You will have approximately 2 hours to complete the workshop. 
 
-### Clone this GitHub repository
-Start this workshop by cloning this repository to your Cloud9 workspace. 
-
-```bash
-git clone https://github.com/aws-samples/eks-security-compromised-cluster-remediation.git
-```
-
 ## Resources & hints
 Aside from this GitHub repository, feel free to use the [EKS Best Practices Guide for Security](https://aws.github.io/aws-eks-best-practices/security/docs/), the official Kubernetes documentation, or other external resources for ideas about how to respond. 
 
@@ -53,6 +46,36 @@ The attacker has left a message for you. If you want an additional challenge, fi
 
 **Hint**: follow the white rabbit to find the [secret](https://kubernetes.io/docs/tasks/run-application/access-api-from-pod/#without-using-a-proxy)
 
+## Getting started
+### Login to the Event Engine Dashboard
+Before you can access the AWS account we've provisioned for you, you will need to login to Event Engine team dashboard. Start by opening your web browser and navigating to `dashboard.eventengine.run/login`. The workshop facilitators will share a 12-16 digit hash with you. Enter this value into the text field on the form and click the **Accept Terms & Login** button. 
+
+When you get to the login screen, click the button labeled **Email One-Time Password (OTP)**. This will redirect you to another form prompting you to enter your email address. Type your email address in that field and click the **Send passcode** button. Wait for the email to arrive in your inbox. The email will contain a one-time passcode. Enter the passcode you receive and click the **Sign in** button. This will redirect you to the team dashboard. 
+
+> Amazon Employees: If you are an Amazon Employee choose **Amazon Employees** at the **Sign in with** prompt instead of using **Email One-Time Password (OTP)**.
+
+### Accessing the AWS Account
+Once you are logged into the dashboard, click on the **AWS Console** button. 
+
+![](./images/ee-1.png)
+
+This will pop-up another form to access the AWS Console. Click the **Open AWS Console** next. 
+
+![](./images/ee-2.png)
+
+When you arrive at the console, type `cloud9` in the search field on the top navigation bar or find Cloud9 in the list of AWS services. From the Cloud9 console, click the 3 horizontal bars in the upper left corner to display the different option for accessing your Cloud9 workspace. Clicking **Account environments** will reveal the workspace you will use for the duration of this workshop. 
+
+![](./images/c9-1.png)
+
+Click the **Open IDE** button. 
+
+![](./images/c9-2.png)
+### Clone this GitHub repository
+Start this workshop by cloning this repository to your Cloud9 workspace. 
+
+```bash
+git clone https://github.com/aws-samples/eks-security-compromised-cluster-remediation.git
+```
 ## Conclusion
 You should come away from this workshop with a better sense of: 
 
