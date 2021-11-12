@@ -57,19 +57,20 @@ When you get to the login screen, click the button labeled **Email One-Time Pass
 ### Accessing the AWS Account
 Once you are logged into the dashboard, click on the **AWS Console** button. 
 
-![](./images/ee-1.png)
+<img src="./images/ee-1.png" width="500">
 
 This will pop-up another form to access the AWS Console. Click the **Open AWS Console** next. 
 
-![](./images/ee-2.png)
+<img src="./images/ee-2.png" width="500">
 
 When you arrive at the console, type `cloud9` in the search field on the top navigation bar or find Cloud9 in the list of AWS services. From the Cloud9 console, click the 3 horizontal bars in the upper left corner to display the different option for accessing your Cloud9 workspace. Clicking **Account environments** will reveal the workspace you will use for the duration of this workshop. 
 
-![](./images/c9-1.png)
+<img src="./images/c9-1.png" width="300">
 
 Click the **Open IDE** button. 
 
-![](./images/c9-2.png)
+<img src="./images/c9-2.png" width="300">
+
 ### Clone this GitHub repository
 Start this workshop by cloning this repository to your Cloud9 workspace. 
 
