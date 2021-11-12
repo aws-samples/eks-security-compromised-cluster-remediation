@@ -70,7 +70,7 @@ Default output format [None]: json
     The following command will now create am IAM service account named `fluent-bit` in the `amazon-cloudwatch` NameSpace of the `security-workshop` cluster.
     ```bash
     eksctl create iamserviceaccount \
-    --cluster example \
+    --cluster security-workshop \
     --namespace amazon-cloudwatch \
     --name fluent-bit \
     --attach-policy-arn arn:aws:iam::aws:policy/CloudWatchFullAccess \
@@ -83,7 +83,7 @@ Default output format [None]: json
     ```bash
     #set the following environment variables using the appropriate ClusterName and RegionName
     ClusterName=security-workshop
-    RegionName=us-east-1
+    RegionName=`curl http://169.254.169.254/latest/dynamic/instance-identity/document|grep region|awk -F\" '{print $4}'`  
     FluentBitHttpPort='2020'
     FluentBitReadFromHead='Off'
     [[${FluentBitReadFromHead} = 'On']] && FluentBitReadFromTail='Off'|| FluentBitReadFromTail='On'
