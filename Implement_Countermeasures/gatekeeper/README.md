@@ -28,6 +28,7 @@ helm repo add gatekeeper https://open-policy-agent.github.io/gatekeeper/charts
 helm upgrade -i --create-namespace gatekeeper gatekeeper/gatekeeper --namespace gatekeeper \
 --set release=v3.6.0
 ```
+:point_right: The following two commands need to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/gatekeeper*
 
 ### Install Constraint Templates
 
