@@ -49,6 +49,8 @@ kubectl delete -f https://raw.githubusercontent.com/kubernetes-sigs/security-pro
 ### Examples - Complainer
 In this example, a seccomp profile is used to setup seccomp in "complain mode", logging syscalls made by a pod.
 
+:point_right: The following two commands need to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator*
+
 ```bash
 kubectl apply -f profiles/ns.yaml
 kubectl apply -f profiles/complainer.yaml
@@ -64,6 +66,8 @@ cat /var/lib/kubelet/seccomp/operator/seccomp-test/complainer.json
 exit
 ```
 Apply the `complainer` pod, and determine the node on which the pod was scheduled:
+
+:point_right: The following *kubectl apply* command needs to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator*
 
 ```bash
 kubectl apply -f pods/complainer.yaml
@@ -91,6 +95,8 @@ type=SECCOMP msg=audit(1634920756.032:13211): auid=4294967295 uid=0 gid=101 ses=
 
 #### Clean-up:
 
+:point_right: The following three commands need to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator*
+
 ```bash
 kubectl delete -f pods/complainer.yaml
 kubectl delete -f profiles/complainer.yaml
@@ -101,6 +107,8 @@ kubectl delete -f profiles/ns.yaml
 
 ### Examples - Complain and block high-risk
 In this example, we will apply a seccomp profile that logs syscalls, blocks high-risk syscalls, and allows some essential syscalls. 
+
+:point_right: The following two commands need to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator*
 
 ```bash
 kubectl apply -f profiles/ns.yaml
@@ -127,6 +135,8 @@ cat /var/lib/kubelet/seccomp/operator/seccomp-test/profile-complain-block-high-r
 ```
 
 Apply the `block-high-risk` pod, and determine the node on which the pod was scheduled:
+
+:point_right: The *kubectk apply* command needs to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator*
 
 ```bash
 kubectl apply -f pods/block-high-risk.yaml
@@ -155,6 +165,8 @@ type=SECCOMP msg=audit(1634920756.032:13211): auid=4294967295 uid=0 gid=101 ses=
 
 #### Clean-up:
 
+:point_right: The following three commands need to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator*
+
 ```bash
 kubectl delete -f pods/block-high-risk.yaml
 kubectl delete -f profiles/multiple.yaml
@@ -165,6 +177,8 @@ kubectl delete -f profiles/ns.yaml
 
 ### Examples - Block all
 In this example, we will apply a seccomp profile that blocks all syscalls. This will prevent the NGINX container from starting.
+
+:point_right: The following three commands need to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator*
 
 ```bash
 kubectl apply -f profiles/ns.yaml
@@ -193,6 +207,8 @@ cat /var/lib/kubelet/seccomp/operator/seccomp-test/profile-block-all.json
 
 Apply the `block-all` pod, and determine the node on which the pod was scheduled:
 
+:point_right: The *kubectl apply* command needs to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator*
+
 ```bash
 kubectl apply -f pods/block-all.yaml
 kubectl -n seccomp-test get pod block-all -o wide
@@ -212,6 +228,8 @@ Error: failed to start container "block-all-container": Error response from daem
 
 #### Clean-up:
 
+:point_right: The following three commands need to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator*
+
 ```bash
 kubectl delete -f pods/block-all.yaml
 kubectl delete -f profiles/multiple.yaml
@@ -222,6 +240,8 @@ kubectl delete -f profiles/ns.yaml
 
 ### Examples - Confine NGINX - Explicit Deny
 In this example, we will apply a seccomp profile that was created using the [confine](https://github.com/shamedgh/confine) tool. This profile defaults to the `SCMP_ACT_ALLOW` action and explicitly denies a list of syscalls using the `SCMP_ACT_ERRNO` action.
+
+:point_right: The following two commands need to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator*
 
 ```bash
 kubectl apply -f profiles/ns.yaml
@@ -247,6 +267,8 @@ cat /var/lib/kubelet/seccomp/operator/seccomp-test/confine-nginx-explicit-deny.j
 
 Apply the `nginx-deny` pod, and determine the node on which the pod was scheduled:
 
+:point_right: The *kubectl apply* command needs to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator*
+
 ```bash
 kubectl apply -f pods/nginx-explicit-deny.yaml
 kubectl -n seccomp-test get pod nginx-deny -o wide
@@ -255,6 +277,8 @@ kubectl -n seccomp-test get pod nginx-deny -o wide
 Verify that the NGINX container in the `nginx-deny` pod is running.
 
 #### Clean-up:
+
+:point_right: The following three commands need to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator*
 
 ```bash
 kubectl delete -f pods/nginx-explicit-deny.yaml
@@ -266,6 +290,8 @@ kubectl delete -f profiles/ns.yaml
 
 ### Examples - Confine NGINX - Explicit Allow
 This profile defaults to the `SCMP_ACT_ERRNO` action and explicitly allows a list of syscalls using the `SCMP_ACT_ALLOW` action.
+
+:point_right: The following two commands need to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator*
 
 ```bash
 kubectl apply -f profiles/ns.yaml
@@ -291,6 +317,8 @@ cat /var/lib/kubelet/seccomp/operator/seccomp-test/confine-nginx-explicit-allow.
 
 Apply the `nginx-allow` pod, and determine the node on which the pod was scheduled:
 
+:point_right: The *kubectl apply* command needs to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator*
+
 ```bash
 kubectl apply -f pods/nginx-explicit-allow.yaml
 kubectl -n seccomp-test get pod nginx-allow -o wide
@@ -299,6 +327,8 @@ kubectl -n seccomp-test get pod nginx-allow -o wide
 Verify that the NGINX container in the `nginx-allow` pod is running.
 
 #### Clean-up:
+
+:point_right: The following three commands need to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator*
 
 ```bash
 kubectl delete -f pods/nginx-explicit-allow.yaml
