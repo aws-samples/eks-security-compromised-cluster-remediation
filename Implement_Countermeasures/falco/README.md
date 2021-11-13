@@ -66,7 +66,6 @@ helm repo add falcosecurity https://falcosecurity.github.io/charts
 helm repo update
 kubectl create namespace falco
 helm install falco falcosecurity/falco -n falco -f values.yaml
-
 ```
 All the necessary customizations are in the values.yaml files.
 
@@ -78,7 +77,6 @@ ebpf:
 auditLog:
   #  Activate the K8s Audit Log feature for Falco
   enabled: true
-
 
 falco:
   # The location of the rules file(s). This can contain one or more paths to
@@ -158,6 +156,8 @@ kubectl port-forward svc/falco-falcosidekick-ui  8080:2802 -n falco
 ```
 
 Connect to `https://localhost:8080/ui` from the browser. On the dashboard, you should see a summary for all Falco events captured on EKS Cluster: some events were generated from the EKS nodes where suspicious activities were detected. Other events are surfaced in the dashboard under `Launch Sensitive Mount Container` and `Terminal shell in container`.
+
+Note: kubectl port-forward does not return. You can open a browser instance by clicking preview --> preview running application in Cloud9 IDE to browse the Falco Sidekick UI dashboard.
 
 ***
 
