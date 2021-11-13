@@ -121,7 +121,7 @@ The above steps create the following cluster resources:
 | ClusterRole        | fluent-bit-role         | Grants get, list, and watch permissions on pod logs to the Fluent-Bit service account. |
 | ClusterRoleBinding | fluent-bit-role-binding | Binds the fluent-bit ServiceAccount to the fluent-bit-role                             |
 
-### Verifing Installation
+### Verifying Installation
 
 - List the newly created CloudWatch LogGroups.
 
