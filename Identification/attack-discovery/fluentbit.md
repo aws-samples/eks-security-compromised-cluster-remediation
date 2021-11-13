@@ -105,21 +105,21 @@ Default output format [None]: json
     ```bash
     kubectl apply -f https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/fluent-bit/fluent-bit.yaml
     ```
+    
+    The above steps create the following cluster resources:
+
+    | Resource Kind      | Resource Name           | Resource Use                                                                           |
+    | ------------------ | ----------------------- | -------------------------------------------------------------------------------------- |
+    | NameSpace          | amazon-cloudwatch       | contains fluent-bit resources                                                          |
+    | DaemonSet          | fluent-bit              | Contains the Pods that run Fluent Bit                                                  |
+    | ConfigMap          | fluent-bit-config       | Contains the configuration to be used by Fluent Bit.                                   |
+    | ServiceAccount     | fluent-bit              | Used to run Fluent Bit                                                                 |
+    | ClusterRole        | fluent-bit-role         | Grants get, list, and watch permissions on pod logs to the Fluent-Bit service account. |
+    | ClusterRoleBinding | fluent-bit-role-binding | Binds the fluent-bit ServiceAccount to the fluent-bit-role                             |
 
 5. Validate the Fluent Bit deployment by entering the following command. Each node should have one pod named fluent-bit-\*.
 
     `kubectl get pods -n amazon-cloudwatch`
-
-The above steps create the following cluster resources:
-
-| Resource Kind      | Resource Name           | Resource Use                                                                           |
-| ------------------ | ----------------------- | -------------------------------------------------------------------------------------- |
-| NameSpace          | amazon-cloudwatch       | contains fluent-bit resources                                                          |
-| DaemonSet          | fluent-bit              | Contains the Pods that run Fluent Bit                                                  |
-| ConfigMap          | fluent-bit-config       | Contains the configuration to be used by Fluent Bit.                                   |
-| ServiceAccount     | fluent-bit              | Used to run Fluent Bit                                                                 |
-| ClusterRole        | fluent-bit-role         | Grants get, list, and watch permissions on pod logs to the Fluent-Bit service account. |
-| ClusterRoleBinding | fluent-bit-role-binding | Binds the fluent-bit ServiceAccount to the fluent-bit-role                             |
 
 ### Verifying Installation
 
