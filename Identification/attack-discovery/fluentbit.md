@@ -26,6 +26,18 @@ eksctl completion bash >> ~/.bash_completion
 . ~/.bash_completion
 ```
 
+Setting default region for rest of commands to work without needing --region flag 
+```bash
+aws configure
+AWS Access Key ID [None]: 
+AWS Secret Access Key [None]: 
+Default region name [None]: us-west-2
+Default output format [None]: json
+```
+
+
+
+
 ## Installation process
 1. If you don't already have a kubernetes namespace named amazon-cloudwatch, create one by using the following command:
 
@@ -58,7 +70,7 @@ eksctl completion bash >> ~/.bash_completion
     The following command will now create am IAM service account named `fluent-bit` in the `amazon-cloudwatch` NameSpace of the `security-workshop` cluster.
     ```bash
     eksctl create iamserviceaccount \
-    --cluster example \
+    --cluster security-workshop \
     --namespace amazon-cloudwatch \
     --name fluent-bit \
     --attach-policy-arn arn:aws:iam::aws:policy/CloudWatchFullAccess \
@@ -71,7 +83,7 @@ eksctl completion bash >> ~/.bash_completion
     ```bash
     #set the following environment variables using the appropriate ClusterName and RegionName
     ClusterName=security-workshop
-    RegionName=us-east-1
+    RegionName=`curl http://169.254.169.254/latest/dynamic/instance-identity/document|grep region|awk -F\" '{print $4}'`  
     FluentBitHttpPort='2020'
     FluentBitReadFromHead='Off'
     [[${FluentBitReadFromHead} = 'On']] && FluentBitReadFromTail='Off'|| FluentBitReadFromTail='On'
