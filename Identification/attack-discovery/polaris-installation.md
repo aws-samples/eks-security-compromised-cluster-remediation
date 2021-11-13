@@ -42,7 +42,7 @@ helm upgrade --install polaris fairwinds-stable/polaris --namespace polaris --cr
 kubectl port-forward --namespace polaris svc/polaris-dashboard 8080:80
 ```
 
-Note : kubectl port-forward does not return. You can open a browser instance with the url https://localhost to browse the Polaris Dashboard.
+Note : kubectl port-forward does not return. You can open a browser instance by clicking preview --> preview running application in cloud9 IDE  to browse the Polaris Dashboard.
 
 # Using the Dashboard
 The Polaris dashboard is a way to get a simple visual overview of the current state of your Kubernetes workloads as well as a roadmap for what can be improved. The dashboard provides a cluster wide overview as well as breaking out results by category, namespace, and workload.
