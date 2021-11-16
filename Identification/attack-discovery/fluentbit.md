@@ -49,7 +49,9 @@ Default output format [None]: json
     
     You will need two components in the cluster in order to map IAM role policies to a service account running the Fluent Bit DaemonSet. First, we will verify there is an OpenID Connect (OIDC) provider for our cluster. Let's start by describing cluster's IAM OIDC provider URL:
     
-    `aws eks describe-cluster --name security-workshop --query "cluster.identity.oidc.issuer" --output text`
+    ```
+    aws eks describe-cluster --name security-workshop --query "cluster.identity.oidc.issuer" --output text
+    ```
 
     The command will return a URL that resembles this: 
     
