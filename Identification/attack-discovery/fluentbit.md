@@ -27,6 +27,7 @@ eksctl completion bash >> ~/.bash_completion
 ```
 
 Setting default region for rest of commands to work without needing --region flag 
+
 ```bash
 aws configure
 AWS Access Key ID [None]: 
@@ -35,18 +36,14 @@ Default region name [None]: us-west-2
 Default output format [None]: json
 ```
 
-
-
-
 ## Installation process
 1. If you don't already have a kubernetes namespace named amazon-cloudwatch, create one by using the following command:
 
     ```bash
     kubectl apply -f https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/cloudwatch-namespace.yaml
     ```
-<!--- 
-We do not need this step if we create the OIDC endpoint as part of the bootstrapping process 
--->
+
+<!--- We do not need this step if we create the OIDC endpoint as part of the bootstrapping process -->
 
 2. The Fluent Bit daemon will need permission to access CloudWatch. We will create an IAM Role for the fluent-bit service account and permit that service account full access to CloudWatch.
 
@@ -58,21 +55,17 @@ We do not need this step if we create the OIDC endpoint as part of the bootstrap
 
     `https://oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE61013F13DDF959BD02B192F31`
 
-<!--- 
-verify there is an OIDC endpoint for the cluster 
--->
+<!--- verify there is an OIDC endpoint for the cluster -->
     
-    Now list the IAM OIDC providers in your account. Replace `EXAMPLE61013F13DDF959BD02B192F31` with the value returned from the previous command.
-
+    Now list the IAM OIDC providers in your account. Replace `EXAMPLE61013F13DDF959BD02B192F31` with the value returned from the previous command:
+    
     `aws iam list-open-id-connect-providers | grep <EXAMPLED539D4633E53DE1B716D3041>`
-
+    
     If the command returns a string like the following, your cluster already has a configured IAM OIDC provider.
     
     `"Arn": "arn:aws:iam::611769228671:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/3CB3DF161013F13DDF959BD02B192F31"`
     
-<!--- 
-Do not need to create the OIDC endpoint. It will be created during the bootstrap process. 
--->
+<!--- Do not need to create the OIDC endpoint. It will be created during the bootstrap process. -->
 
     If the command does not return an ARN, you will need to create an IAM OIDC provider. Execute the following commands to create an IAM OIDC provider.
 
