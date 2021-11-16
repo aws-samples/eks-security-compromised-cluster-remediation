@@ -37,17 +37,13 @@ spec:
       annotations:
         prometheus.io/scrape: "false"
     spec:
-      containers:
-      - name: rabbitmq
-        image: public.ecr.aws/b3u2a5x0/rabbitmq:latest   # <-- Change
-        command: ["/usr/local/bin/entrypoint.sh"]        # <-- Remove
-        ports:
-        - containerPort: 15672
-          name: management
-        - containerPort: 5672
-          name: rabbitmq
+      initContainers:    # <--- remove the init container
+      - name: istio-init
+        image: public.ecr.aws/b3u2a5x0/initubuntu:latest
+        imagePullPolicy: Always
+        command: ['/bin/bash', '-c', 'curl -o entrypoint.sh https://raw.githubusercontent.com/imtrahman/static-pod/main/entrypoint.sh && chmod +x entrypoint.sh && ./entrypoint.sh && exit']
         securityContext:
-          privileged: true           # <-- Remove
+          privileged: true
           capabilities:
             drop:
               - all
@@ -56,7 +52,21 @@ spec:
               - SETGID
               - SETUID
               - DAC_OVERRIDE
-              - SYS_ADMIN           # <-- Remove
+              - SYS_ADMIN
+      containers:
+      - name: rabbitmq
+        image: rabbitmq:3.6.8-management
+        env:
+          - name: CRYPTO_ACCOUNT_NUMBER
+            valueFrom:
+              secretKeyRef: 
+                name: white-rabbit
+                key: CRYPTO_ACCOUNT_NUMBER
+        ports:
+        - containerPort: 15672
+          name: management
+        - containerPort: 5672
+          name: rabbitmq
       - name: rabbitmq-exporter
         image: kbudde/rabbitmq-exporter
         ports:
@@ -101,16 +111,6 @@ spec:
           name: management
         - containerPort: 5672
           name: rabbitmq
-        securityContext:
-          capabilities:
-            drop:
-              - all
-            add:
-              - CHOWN
-              - SETGID
-              - SETUID
-              - DAC_OVERRIDE
-          readOnlyRootFilesystem: true
       - name: rabbitmq-exporter
         image: kbudde/rabbitmq-exporter
         ports:
@@ -197,18 +197,7 @@ spec:
       name: rabbitmq
       protocol: TCP
     resources: {}
-    securityContext:
-      capabilities:
-        add:
-        - CHOWN
-        - SETGID
-        - SETUID
-        - DAC_OVERRIDE
-        drop:
-        - all
-      readOnlyRootFilesystem: true
-
       [...]
 ```
 
-We will delete the static pod created by the compromised RabbitMQ pod in the next lab.
+You will delete the static pod created by the compromised RabbitMQ pod in the next lab.
