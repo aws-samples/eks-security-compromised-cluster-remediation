@@ -32,7 +32,7 @@ To run a CloudWatch Logs Insights sample query
 
 2. In the navigation pane, choose Logs Insights. You can find "Logs Insights" under the "Logs" section on the navigation pane.
 
-3. Select the log group associated with your EKS cluster above the query editor. e.g: /aws/eks/_**my-eks-cluster**_/cluster. In this example the EKS cluster name is "**my-eks-cluster**". Find the log group associated with your EKS cluster. To help find your log groups, enter text in the search bar and CloudWatch Logs displays matching log groups in the search bar.
+3. Select the log group associated with your EKS cluster above the query editor. e.g: /aws/eks/_**my-eks-cluster**_/cluster. In this example the EKS cluster name is "**security-workshop**". Find the log group associated with your EKS cluster. To help find your log groups, enter text in the search bar and CloudWatch Logs displays matching log groups in the search bar.
 
 4. (Optional) Use the time selector at the upper right to select the time period that you want to query.
 
