@@ -60,7 +60,7 @@ To run a CloudWatch Logs Insights sample query
     ![Sample Query](./images/sample_query_fields.png)
 
 
-## Additional Information:
+## Additional Information
 - [Analyzing log data with CloudWatch Logs Insights](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AnalyzingLogData.html)
 
 ## Next Steps
