@@ -153,6 +153,9 @@ Default output format [None]: json
     kubectl describe pod {pod_name} -n amazon-cloudwatch
     ```
 
-# Additional Information:
+## Additional Information
 
 - [Setting up Fluent Bit as a DaemonSet to send logs to CloudWatch](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Container-Insights-setup-logs-FluentBit.html)
+
+## Next Steps
+In this README you learned how to route logs to CloudWatch using Fluent Bit. This allows you to preserve container logs beyond the life of the container. You also have the ability to filter and query them using Log Insights. Next, you will examine Polaris, an open source best practices analyzer for Kubernetes. Click this [link](./polaris-installation.md) when you're ready to continue. 
