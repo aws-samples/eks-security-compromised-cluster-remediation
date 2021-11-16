@@ -121,21 +121,21 @@ Default output format [None]: json
 
 ### Verifying Installation
 
-List the newly created CloudWatch LogGroups.
+- List the newly created CloudWatch LogGroups.
 
-```bash
-aws logs describe-log-groups --query 'logGroups[*].logGroupName' | grep "container"
-```
+    ```bash
+    aws logs describe-log-groups --query 'logGroups[*].logGroupName' | grep "container"
+    ```
 
-Check the returned list of log groups should include the following:
+- Check the returned list of log groups should include the following:
 
-```
-/aws/containerinsights/{ClusterName}/application
-/aws/containerinsights/{ClusterName}/host
-/aws/containerinsights/{ClusterName}/dataplane
-```
+    ```
+    /aws/containerinsights/{ClusterName}/application
+    /aws/containerinsights/{ClusterName}/host
+    /aws/containerinsights/{ClusterName}/dataplane
+    ```
 
-> There may be a delay in the creation of log groups and log streams.
+    > There may be a delay in the creation of log groups and log streams.
 
 ## Troubleshooting
 
