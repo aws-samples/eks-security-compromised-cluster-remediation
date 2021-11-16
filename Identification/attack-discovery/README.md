@@ -64,4 +64,4 @@ To run a CloudWatch Logs Insights sample query
 - [Analyzing log data with CloudWatch Logs Insights](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AnalyzingLogData.html)
 
 ## Next Steps
-This README taught you how to query the EKS Control Plane logs using Log Insights. As we say, this can help you find logs with particular attributes, e.g. pods running as privileged. Next, you'll learn how to route logs from containers to CloudWatch logs using Fluent Bit. Click this [link](./fluentbit.md) to go to continue. 
+This README taught you how to query the EKS Control Plane logs using Log Insights. As we saw in the example, this can help you find logs with particular attributes, e.g. pods running as privileged. Next, you'll learn how to route logs from containers to CloudWatch logs using Fluent Bit. Click this [link](./fluentbit.md) to go to continue. 
