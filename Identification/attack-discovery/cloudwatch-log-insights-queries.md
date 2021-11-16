@@ -47,7 +47,7 @@ To run a CloudWatch Logs Insights sample query
     ```
 
     ![Sample Query](./images/sample_query.png)
-
+<!--- Getting some deletes in the result set, though I'm not sure why -->
 6. The results show the log events that were received by CloudWatch Logs that contain logs from the kube-api-server as it created, updated and patched privileged pods. i.e. any pods that were created through a deployment or a pod manifest and has any of the following attributes in its specification.
 
     * privileged: true
