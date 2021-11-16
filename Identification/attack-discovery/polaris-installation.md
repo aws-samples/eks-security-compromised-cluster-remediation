@@ -1,12 +1,12 @@
 # Polaris By Fairwinds
 Polaris is an open source project that identifies Kubernetes deployment configuration errors. It is part of the **detection and analysis** phase of an incident response plan. Polaris runs over a dozen different checks to help users discover Kubernetes misconfigurations that frequently cause security vulnerabilities, outages, scaling limitations and more. Using Polaris will help you avoid common problems and ensure you’re configuration is aligned Kubernetes best practices.
 
-# Background
+## Background
 Securing workloads in Kubernetes is an important aspect of cluster security. Your goal as a security practitioner should be to ensure that containers are run with the minimal privileges. For example, avoid privileged escalation, running containers as the root user, not granting access to the host's network namespace, and using a read-only root file systems whenever possible.
 
 Much of this configuration can be found in the securityContext attribute for both Kubernetes pods and containers. Where configuration is available at both a pod and container level, Polaris validates both.
 
-# Security
+## Security
 These checks are related to security concerns. Workloads that fail these checks may make your cluster more vulnerable, often by introducing a path for privilege escalation.
 
 |              key              | default |                     description                     |
@@ -23,7 +23,7 @@ These checks are related to security concerns. Workloads that fail these checks 
 |      hostPortSet              | warning | Fails when hostPort attribute is configured.
 |    tlsSettingsMissing         | warning | Fails when an Ingress lacks TLS settings.
 
-# Installation
+## Installation
 Fairwinds' Polaris helps keep your clusters operating smoothly. It runs a variety of checks to ensure that Kubernetes pods and controllers are aligned with best practices, helping you avoid problems in the future.
 
 Polaris can be run in three different modes:
@@ -44,14 +44,14 @@ kubectl port-forward --namespace polaris svc/polaris-dashboard 8080:80
 
 Note : kubectl port-forward does not return. You can open a browser instance by clicking **Preview/Preview Running Application** in Cloud9 IDE  to browse the Polaris Dashboard.
 
-# Using the Dashboard
+## Using the Dashboard
 The Polaris dashboard is a way to get a simple visual overview of the current state of your Kubernetes workloads as well as a roadmap for what can be improved. The dashboard provides a cluster wide overview as well as breaking out results by category, namespace, and workload.
 
  ![Polaris Dashboard](./images/Polaris-dashboard-1.png)
  
 The Polaris default standards are rather high, so don’t be surprised if your score is lower than you might expect. A key goal for Polaris was to set a high standard and aim for great configuration by default. If the defaults are too strict, it’s easy to adjust the configuration as part of the deployment configuration to better suit your workloads.
 
-# Interpret the results from the Dashboard
+## Interpret the results from the Dashboard
 1. You can use the "Results by Category" dropdown to select the namespaces that you want to filter on.  The following example shows a filter applied to the **privileged** namespace.
 
     ![Polaris Dashboard - Filter](./images/Polaris-dashboard-3.png)
@@ -60,6 +60,11 @@ The Polaris default standards are rather high, so don’t be surprised if your s
 
     ![Polaris Dashboard](./images/Polaris-dashboard-2.png)
 
+## Challenge
+Use the information you were able to glean from querying the Kubernetes audit log together with the information from Polaris to find the compromised pod. 
 
-# Additional Information:
+## Additional Information:
 - [Polaris](https://polaris.docs.fairwinds.com/)
+
+## Next Steps
+You have finished the identification stage of the incident response plan. In the next stage you will isolate the compromise and capture evidence from the environment so that can be used in a forensics investigation. Click this [link](https://github.com/aws-samples/eks-security-compromised-cluster-remediation/tree/main/Containment/forensics) to continue. 
