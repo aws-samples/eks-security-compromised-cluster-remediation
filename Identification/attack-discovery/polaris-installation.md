@@ -62,7 +62,7 @@ The Polaris default standards are rather high, so don’t be surprised if your s
 
 
 # Additional Information:
-- Polaris https://polaris.docs.fairwinds.com/
+- [Polaris](https://polaris.docs.fairwinds.com/)
 
 
 
