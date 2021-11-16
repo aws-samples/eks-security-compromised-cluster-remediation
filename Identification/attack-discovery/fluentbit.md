@@ -57,9 +57,11 @@ We do not need this step if we create the OIDC endpoint as part of the bootstrap
     You the command will return a URL like this exameple:
 
     `https://oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE61013F13DDF959BD02B192F31`
+
 <!--- 
 verify there is an OIDC endpoint for the cluster 
 -->
+    
     Now list the IAM OIDC providers in your account. Replace `EXAMPLE61013F13DDF959BD02B192F31` with the value returned from the previous command.
 
     `aws iam list-open-id-connect-providers | grep <EXAMPLED539D4633E53DE1B716D3041>`
@@ -67,9 +69,11 @@ verify there is an OIDC endpoint for the cluster
     If the command returns a string like the following, your cluster already has a configured IAM OIDC provider.
     
     `"Arn": "arn:aws:iam::611769228671:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/3CB3DF161013F13DDF959BD02B192F31"`
+    
 <!--- 
 Do not need to create the OIDC endpoint. It will be created during the bootstrap process. 
 -->
+
     If the command does not return an ARN, you will need to create an IAM OIDC provider. Execute the following commands to create an IAM OIDC provider.
 
     `eksctl utils associate-iam-oidc-provider --cluster security-workshop --approve`
@@ -93,9 +97,11 @@ Do not need to create the OIDC endpoint. It will be created during the bootstrap
     RegionName=`curl -s http://169.254.169.254/latest/meta-data/placement/region`  
     FluentBitHttpPort='2020'
     FluentBitReadFromHead='Off'
+    
     <!--- 
-    Lines 90-91 don't work 
+    The next 2 commands don't work 
     -->
+    
     [[${FluentBitReadFromHead} = 'On']] && FluentBitReadFromTail='Off'|| FluentBitReadFromTail='On'
     [[-z ${FluentBitHttpPort}]] && FluentBitHttpServer='Off' || FluentBitHttpServer='On'
     kubectl create configmap fluent-bit-cluster-info \
@@ -107,9 +113,11 @@ Do not need to create the OIDC endpoint. It will be created during the bootstrap
             --from-literal=logs.region=${RegionName} \
             -n amazon-cloudwatch
     ```
+
 <!--- 
 This paragraph is not necessary. Set FluentBitHttpPort to 2020 and FluentBitReadFromHead to On 
 -->
+
     In the previous command, FluentBitHttpServer for monitoring plugin metrics is on by default. To turn it off, change the third line in the command to FluentBitHttpPort=""" (an empty string) in the command. Also by default, Fluent Bit reads log files from the tail, and will only capture logs created after the DeamonSet was deployed. If you want the opposite, set FluentBitReadFromHead="On" and it will collect all logs in the file system.
 
 4. Download and deploy the Fluent Bit daemonset manifest to the cluster by running the following command:
