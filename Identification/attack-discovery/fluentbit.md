@@ -26,7 +26,7 @@ eksctl completion bash >> ~/.bash_completion
 . ~/.bash_completion
 ```
 
-Setting default region for rest of commands to work without needing --region flag 
+Setting default region for rest of commands to work without needing `--region` flag 
 
 ```bash
 aws configure
@@ -46,32 +46,19 @@ Default output format [None]: json
 <!--- We do not need this step if we create the OIDC endpoint as part of the bootstrapping process -->
 
 2. The Fluent Bit daemon will need permission to access CloudWatch. We will create an IAM Role for the fluent-bit service account and permit that service account full access to CloudWatch.
-
-    a. You will need two components in the cluster in order to map IAM role policies to a service account running the Fluent Bit DaemonSet. First, we will ensure that there is an OpenID Connect (OIDC) provider for our cluster. Let's list the cluster's IAM OIDC provider URL:
+    
+    You will need two components in the cluster in order to map IAM role policies to a service account running the Fluent Bit DaemonSet. First, we will verify there is an OpenID Connect (OIDC) provider for our cluster. Let's start by describing cluster's IAM OIDC provider URL:
     
     `aws eks describe-cluster --name security-workshop --query "cluster.identity.oidc.issuer" --output text`
 
-    You the command will return a URL like this exameple:
-
-    `https://oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE61013F13DDF959BD02B192F31`
-
-<!--- verify there is an OIDC endpoint for the cluster -->
+    The command will return a URL that resembles this: 
     
-    Now list the IAM OIDC providers in your account. Replace `EXAMPLE61013F13DDF959BD02B192F31` with the value returned from the previous command:
-    
-    `aws iam list-open-id-connect-providers | grep <EXAMPLED539D4633E53DE1B716D3041>`
-    
-    If the command returns a string like the following, your cluster already has a configured IAM OIDC provider.
-    
-    `"Arn": "arn:aws:iam::611769228671:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/3CB3DF161013F13DDF959BD02B192F31"`
-    
-<!--- Do not need to create the OIDC endpoint. It will be created during the bootstrap process. -->
-
-    If the command does not return an ARN, you will need to create an IAM OIDC provider. Execute the following commands to create an IAM OIDC provider.
-
-    `eksctl utils associate-iam-oidc-provider --cluster security-workshop --approve`
+    ```
+    https://oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE61013F13DDF959BD02B192F31
+    ```
 
     The following command will now create am IAM service account named `fluent-bit` in the `amazon-cloudwatch` NameSpace of the `security-workshop` cluster.
+    
     ```bash
     eksctl create iamserviceaccount \
     --cluster security-workshop \
@@ -107,11 +94,7 @@ Default output format [None]: json
             -n amazon-cloudwatch
     ```
 
-<!--- 
-This paragraph is not necessary. Set FluentBitHttpPort to 2020 and FluentBitReadFromHead to On 
--->
-
-    In the previous command, FluentBitHttpServer for monitoring plugin metrics is on by default. To turn it off, change the third line in the command to FluentBitHttpPort=""" (an empty string) in the command. Also by default, Fluent Bit reads log files from the tail, and will only capture logs created after the DeamonSet was deployed. If you want the opposite, set FluentBitReadFromHead="On" and it will collect all logs in the file system.
+<!--- Set FluentBitHttpPort to 2020 and FluentBitReadFromHead to On -->
 
 4. Download and deploy the Fluent Bit daemonset manifest to the cluster by running the following command:
 
@@ -132,7 +115,9 @@ This paragraph is not necessary. Set FluentBitHttpPort to 2020 and FluentBitRead
 
 5. Validate the Fluent Bit deployment by entering the following command. Each node should have one pod named fluent-bit-\*.
 
-    `kubectl get pods -n amazon-cloudwatch`
+    ```
+    kubectl get pods -n amazon-cloudwatch
+    ```
 
 ### Verifying Installation
 
