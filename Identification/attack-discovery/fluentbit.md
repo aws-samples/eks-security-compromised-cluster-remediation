@@ -44,7 +44,10 @@ Default output format [None]: json
     ```bash
     kubectl apply -f https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/cloudwatch-namespace.yaml
     ```
-<!--- We do not need this step if we create the OIDC endpoint as part of the bootstrapping process -->
+<!--- 
+We do not need this step if we create the OIDC endpoint as part of the bootstrapping process 
+--->
+
 2. The Fluent Bit daemon will need permission to access CloudWatch. We will create an IAM Role for the fluent-bit service account and permit that service account full access to CloudWatch.
 
     a. You will need two components in the cluster in order to map IAM role policies to a service account running the Fluent Bit DaemonSet. First, we will ensure that there is an OpenID Connect (OIDC) provider for our cluster. Let's list the cluster's IAM OIDC provider URL:
@@ -54,7 +57,9 @@ Default output format [None]: json
     You the command will return a URL like this exameple:
 
     `https://oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE61013F13DDF959BD02B192F31`
-<!--- verify there is an OIDC endpoint for the cluster --->
+<!--- 
+verify there is an OIDC endpoint for the cluster 
+--->
     Now list the IAM OIDC providers in your account. Replace `EXAMPLE61013F13DDF959BD02B192F31` with the value returned from the previous command.
 
     `aws iam list-open-id-connect-providers | grep <EXAMPLED539D4633E53DE1B716D3041>`
