@@ -1,8 +1,8 @@
 # Polaris By Fairwinds
-Polaris is an open source project that identifies Kubernetes deployment configuration errors. It is part of the **detection and analysis** phase of an incident response plan. Polaris runs over a dozen different checks to help users discover Kubernetes misconfigurations that frequently cause security vulnerabilities, outages, scaling limitations and more. Using Polaris, you can avoid problems and ensure you’re using Kubernetes best practices.
+Polaris is an open source project that identifies Kubernetes deployment configuration errors. It is part of the **detection and analysis** phase of an incident response plan. Polaris runs over a dozen different checks to help users discover Kubernetes misconfigurations that frequently cause security vulnerabilities, outages, scaling limitations and more. Using Polaris will help you avoid common problems and ensure you’re configuration is aligned Kubernetes best practices.
 
 # Background
-Securing workloads in Kubernetes is an important part of overall cluster security. The overall goal should be to ensure that containers are running with as minimal privileges as possible. This includes avoiding privilege escalation, not running containers as the root user, not giving excessive access to the host's network namespace, and using read only file systems whenever possible.
+Securing workloads in Kubernetes is an important aspect of cluster security. Your goal as a security practitioner should be to ensure that containers are run with the minimal privileges. For example, avoid privileged escalation, running containers as the root user, not granting access to the host's network namespace, and using a read-only root file systems whenever possible.
 
 Much of this configuration can be found in the securityContext attribute for both Kubernetes pods and containers. Where configuration is available at both a pod and container level, Polaris validates both.
 
@@ -42,7 +42,7 @@ helm upgrade --install polaris fairwinds-stable/polaris --namespace polaris --cr
 kubectl port-forward --namespace polaris svc/polaris-dashboard 8080:80
 ```
 
-Note : kubectl port-forward does not return. You can open a browser instance by clicking preview --> preview running application in cloud9 IDE  to browse the Polaris Dashboard.
+Note : kubectl port-forward does not return. You can open a browser instance by clicking **Preview/Preview Running Application** in Cloud9 IDE  to browse the Polaris Dashboard.
 
 # Using the Dashboard
 The Polaris dashboard is a way to get a simple visual overview of the current state of your Kubernetes workloads as well as a roadmap for what can be improved. The dashboard provides a cluster wide overview as well as breaking out results by category, namespace, and workload.
@@ -63,6 +63,3 @@ The Polaris default standards are rather high, so don’t be surprised if your s
 
 # Additional Information:
 - [Polaris](https://polaris.docs.fairwinds.com/)
-
-
-
