@@ -139,6 +139,9 @@ Default output format [None]: json
 
     > There may be a delay in the creation of log groups and log streams.
 
+## Challenge
+The attacker has left a message for you in the logs. Try to find it before continuing on to the next step. 
+
 ## Troubleshooting
 
 - If you don't see these log groups and are looking in the correct Region, check the logs of the Fluent Bit DaemonSet pods to look for the error. You can do this by running: 
