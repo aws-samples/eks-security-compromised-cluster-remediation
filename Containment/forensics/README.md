@@ -33,14 +33,22 @@ We've created an SSM Document that incorporates the functionality of kube-forens
     --target-type /AWS::EC2::Instance
     ```
 
-3. Run the Document against an instance by executing the following command: 
+3. Run the Document against an instance by executing the following command. Replace the placeholder values with the actual values before running this command: 
 
     ```bash
-    aws ssm send-command --document-name "forensics-capture" --document-version "1" --targets '[{"Key":"InstanceIds","Values":["<INSTANCE_ID>"]}]' --parameters '{"Verbose":["-v"],"TimeoutSeconds":["3600"],"Namespace":["<NAMESPACE>"],"PodName":["<POD_NAME>"],"DestinationBucket":["<DEST_BUCKET>"],"ClusterName":["<CLUSTER_NAME>"]}' --timeout-seconds 600 --max-concurrency "50" --max-errors "0" --output-s3-bucket-name "<LOGGING_BUCKET>" --region <AWS_REGION>
+    aws ssm send-command --document-name "forensics-capture" --document-version "1" \
+    --targets '[{"Key":"InstanceIds","Values":["<INSTANCE_ID>"]}]' \
+    --parameters '{"Verbose":["-v"],"TimeoutSeconds":["3600"],"Namespace":["<NAMESPACE>"],"PodName":["<POD_NAME>"],"DestinationBucket":["${FORENSICS_S3_BUCKET}"],"ClusterName":["security-workshop"]}' \
+    --timeout-seconds 600 \
+    --max-concurrency "50" \
+    --max-errors "0" \
+    --output-s3-bucket-name "${FORENSICS_S3_BUCKET}" \
+    --region us-west-2
     ```
 
 > The LOGGING_BUCKET is for storing the output from Run Command. For simplicity, you can use the DEST_BUCKET as the logging bucket. 
 
+<!---
 Since the script uploads content to an s3 bucket, the instance on which the script is executed needs s3:PutObject permissions to the destination bucket. Before running the script, add the following inline policy to the instance and/or node group: 
 
 ```json
@@ -59,7 +67,7 @@ Since the script uploads content to an s3 bucket, the instance on which the scri
     ]
 }
 ```
-
+-->
 ## Rescheduling unaffected pods onto other nodes
 
 Once you've cordoned the node, you can begin rescheduling all the unaffected pods running on the node onto other nodes in the cluster. You can do this a couple different ways. The first way is to delete the unaffected pods. A cordoned node it is marked as unscheduleable. Pods that are deleted from condoned nodes will be rescheduled onto other nodes in the cluster. The second way is to apply a toleration to the compromised pod and then apply a taint to the node. This will evict all pods without a toleration for the taint from the node. For this exercise, we will be cordoning the node and deleting the unaffected pods. 
