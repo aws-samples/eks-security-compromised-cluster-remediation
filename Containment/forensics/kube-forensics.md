@@ -62,6 +62,7 @@ deployment.apps/forensics-controller-manager unchanged
 
 Once the kube-forensics controller is installed, a `PodCheckpoint` spec can be submitted for processing.
 
+<!---
 ## Update the ServiceAccount to use IRSA
 
 Ordinarily, kube-forensics requires worker nodes to have an IAM role that allows the PutObject API call to an S3 bucket. For this exercise, we are going to update the job's ServiceAccount to use IAM Roles for Service Accounts (IRSA) instead. 
@@ -97,7 +98,7 @@ spec:
   pod: bad-pod-1234567890-dead1
   namespace: default
 ```
-
+-->
 ### Submit & Verify
 
 ``` sh
