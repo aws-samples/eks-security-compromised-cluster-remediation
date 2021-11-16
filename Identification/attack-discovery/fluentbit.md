@@ -139,15 +139,19 @@ Check the returned list of log groups should include the following:
 
 ## Troubleshooting
 
-If you don't see these log groups and are looking in the correct Region, check the logs of the Fluent Bit DaemonSet pods to look for the error.
+- If you don't see these log groups and are looking in the correct Region, check the logs of the Fluent Bit DaemonSet pods to look for the error. You can do this by running: 
 
-`kubectl logs fluent-bit-{unique-id}`
+    ```
+    kubectl logs fluent-bit-{unique-id}
+    ```
 
-If you see errors related to IAM permissions, check the IAM role attached to the cluster nodes or fluent-bit IAM service account.
+- If you see errors related to IAM permissions, check the IAM role attached to the cluster nodes or fluent-bit IAM service account.
 
-If the pod status is CreateContainerConfigError, get the exact error by running the following command.
+- If the pod status is CreateContainerConfigError, get the exact error by running the following command:
 
-`kubectl describe pod {pod_name} -n amazon-cloudwatch`
+    ```
+    kubectl describe pod {pod_name} -n amazon-cloudwatch
+    ```
 
 # Additional Information:
 
