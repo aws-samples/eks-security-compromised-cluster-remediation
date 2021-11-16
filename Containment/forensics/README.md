@@ -21,32 +21,34 @@ Creating a forensic workstation and analyzing the dump is out of scope for this 
 
 We've created an SSM Document that incorporates the functionality of kube-forensics and creates a memory dump from the instance and uploads it to an s3 bucket. Perform the following actions to create the document in SSM: 
 
-1. Download the `forensics/ssm-document.json` file from the Git repository
-2. Open a terminal and run the following command
+1. Download the `forensics/ssm-document.json` file from the Git repository. If you've already cloned this repository, you can skip this step. 
+2. Open a terminal and run the following commands:
 
     ```bash
+    cd ~/environment/eks-security-compromised-cluster-remediation/Containment/forensics
     aws ssm create-document \
     --content file://ssm-document.json \
     --name forensics-capture \
     --document-type Command \
     --document-format JSON \
     --target-type /AWS::EC2::Instance
-    ```
-
-3. Run the Document against an instance by executing the following command. Replace the placeholder values with the actual values before running this command: 
-
-    ```bash
-    aws ssm send-command --document-name "forensics-capture" --document-version "1" \
-    --targets '[{"Key":"InstanceIds","Values":["<INSTANCE_ID>"]}]' \
-    --parameters '{"Verbose":["-v"],"TimeoutSeconds":["3600"],"Namespace":["<NAMESPACE>"],"PodName":["<POD_NAME>"],"DestinationBucket":["${FORENSICS_S3_BUCKET}"],"ClusterName":["security-workshop"]}' \
-    --timeout-seconds 600 \
-    --max-concurrency "50" \
-    --max-errors "0" \
-    --output-s3-bucket-name "${FORENSICS_S3_BUCKET}" \
     --region us-west-2
     ```
 
-> The LOGGING_BUCKET is for storing the output from Run Command. For simplicity, you can use the DEST_BUCKET as the logging bucket. 
+3. Run the Document against an instance by executing the following command. Replace the placeholder values (INSTANCE_ID, NAMESPACE, and POD_NAME) with the actual values before running this command.
+
+    ```bash
+    aws ssm send-command --document-name "forensics-capture" --document-version "1" \
+    --targets '[{"Key":"InstanceIds","Values":["INSTANCE_ID"]}]' \
+    --parameters '{"Verbose":["-v"],"TimeoutSeconds":["3600"],"Namespace":["NAMESPACE"],"PodName":["POD_NAME"],"DestinationBucket":["'$FORENSICS_S3_BUCKET'"],"ClusterName":["security-workshop"]}' \
+    --timeout-seconds 600 \
+    --max-concurrency "50" \
+    --max-errors "0" \
+    --output-s3-bucket-name "$FORENSICS_S3_BUCKET" \
+    --region us-west-2
+    ```
+
+> The **DestinationBucket** and **output-s3-bucket-name** have been set to the environment variable `FORENSICS_S3_BUCKET` for you. 
 
 <!---
 Since the script uploads content to an s3 bucket, the instance on which the script is executed needs s3:PutObject permissions to the destination bucket. Before running the script, add the following inline policy to the instance and/or node group: 
