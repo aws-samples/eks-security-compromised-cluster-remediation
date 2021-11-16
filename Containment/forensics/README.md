@@ -51,6 +51,7 @@ We've created an SSM Document that incorporates the functionality of kube-forens
 > The **DestinationBucket** and **output-s3-bucket-name** have been set to the environment variable `FORENSICS_S3_BUCKET` for you. 
 
 ### Verification
+To verify that the automation script worked, look at the contents of the FORENSICS_S3_BUCKET in the S3 console. The bucket name will start with clusterstack-forensicsbucket. If you see a folder called `forensics`, the script worked as intended. Inside that folder you'll find the memory dump from the instance, an export of the containers in the pod and additional metadata.
 
 <!---
 Since the script uploads content to an s3 bucket, the instance on which the script is executed needs s3:PutObject permissions to the destination bucket. Before running the script, add the following inline policy to the instance and/or node group: 
