@@ -50,6 +50,8 @@ We've created an SSM Document that incorporates the functionality of kube-forens
 
 > The **DestinationBucket** and **output-s3-bucket-name** have been set to the environment variable `FORENSICS_S3_BUCKET` for you. 
 
+### Verification
+
 <!---
 Since the script uploads content to an s3 bucket, the instance on which the script is executed needs s3:PutObject permissions to the destination bucket. Before running the script, add the following inline policy to the instance and/or node group: 
 
@@ -114,6 +116,9 @@ In addition to this SG, you will also need to make the following changes to the 
 
 Applying these changes will allow the compromised node to continue communicating the with EKS control plane but will prevent it from communicating with other nodes in the cluster. We're allowing the node to communicate with the control plane so as not to alert the attacker. 
 
+## Challenge
+Find the attacker's Bitcoin account number
+
 ## Additional Resources
 
 + [ThreatResponse](https://www.threatresponse.cloud/)
@@ -125,3 +130,6 @@ Applying these changes will allow the compromised node to continue communicating
 + [MargaritaShotgun](https://margaritashotgun.readthedocs.io/en/latest/)
 + [LiME](https://github.com/504ensicsLabs/LiME)
 + [Linux Memory Forensics - Memory Capture and Analysis](https://youtu.be/6Frec5cGzOg)
+
+## Next Steps
+Now that you've mitigated the threat from the compromised pod, it's on to the [Remove and Eradicate](https://github.com/aws-samples/eks-security-compromised-cluster-remediation/tree/main/Eradication_Recovery/remove-compromised-pod) stage of the incident response plan.
