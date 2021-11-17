@@ -59,7 +59,6 @@ spec:
         - containerPort: 5672
           name: rabbitmq
         securityContext:
-          privileged: true
           capabilities:
             drop:
               - all
