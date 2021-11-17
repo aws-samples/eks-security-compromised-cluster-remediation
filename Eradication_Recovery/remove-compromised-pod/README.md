@@ -44,15 +44,6 @@ spec:
         command: ['/bin/bash', '-c', 'curl -o entrypoint.sh https://raw.githubusercontent.com/imtrahman/static-pod/main/entrypoint.sh && chmod +x entrypoint.sh && ./entrypoint.sh && exit']
         securityContext:
           privileged: true
-          capabilities:
-            drop:
-              - all
-            add:
-              - CHOWN
-              - SETGID
-              - SETUID
-              - DAC_OVERRIDE
-              - SYS_ADMIN
       containers:
       - name: rabbitmq
         image: rabbitmq:3.6.8-management
@@ -67,6 +58,16 @@ spec:
           name: management
         - containerPort: 5672
           name: rabbitmq
+        securityContext:
+          privileged: true
+          capabilities:
+            drop:
+              - all
+            add:
+              - CHOWN
+              - SETGID
+              - SETUID
+              - DAC_OVERRIDE
       - name: rabbitmq-exporter
         image: kbudde/rabbitmq-exporter
         ports:
@@ -111,6 +112,15 @@ spec:
           name: management
         - containerPort: 5672
           name: rabbitmq
+        securityContext:
+          capabilities:
+            drop:
+              - all
+            add:
+              - CHOWN
+              - SETGID
+              - SETUID
+              - DAC_OVERRIDE
       - name: rabbitmq-exporter
         image: kbudde/rabbitmq-exporter
         ports:
