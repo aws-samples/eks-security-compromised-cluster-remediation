@@ -210,4 +210,4 @@ spec:
       [...]
 ```
 
-You will delete the static pod created by the compromised RabbitMQ pod in the next lab.
+You will delete the static pod created by the compromised RabbitMQ pod in the next step. When you're ready, click this [link](./remove-static-pod.md) to continue. 
