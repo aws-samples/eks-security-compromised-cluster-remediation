@@ -41,7 +41,7 @@ To run a CloudWatch Logs Insights sample query
     ```
     fields requestURI, verb
     | filter requestURI like 'pods' 
-    and @message like '"privileged":true' or @message like '"hostNetwork":true' or @message like '"hostPath":path: /' or @message like '"hostPID": true'
+    and (@message like '"privileged":true' or @message like '"hostNetwork":true' or @message like '"hostPath":path: /' or @message like '"hostPID": true')
     and verb in ["create","update","patch"] 
     and requestURI != "/api/v1/namespaces/kube-system/pods"
     ```
