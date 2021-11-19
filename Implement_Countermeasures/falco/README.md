@@ -188,4 +188,4 @@ Falcosidekick is a powerful threat response system with many integrations. We ca
 ---
 
 ## Congratulations
-Congratulations for completing the workhop! You've managed to thwart the ransomware attack, collected evidence for the authorities, and implemented a set of countermeasures to protect Octank against future attacks. We hope you found the time worthwhile and realize the importance of having a incident response plan. Like they say in the Scout's, "BE PREPARED!"
+Congratulations for completing the workhop! You've managed to thwart the ransomware attack, collected evidence for the authorities, and implemented a set of countermeasures to protect Octank against future attacks. We hope you found the time worthwhile and realize the importance of having a incident response plan. As the Scout's motto says, "BE PREPARED!"
