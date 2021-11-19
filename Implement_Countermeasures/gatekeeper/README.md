@@ -40,7 +40,8 @@ kubectl apply -f constraint-templates/
 kubectl apply -f constraints/
 ```
 
-## Deinstallation
+## Deinstallation (optional)
+Do not delete until you've had an opportunity to run the tests. 
 
 ```bash
 kubectl delete -f constraints/
@@ -54,6 +55,8 @@ helm uninstall gatekeeper
 tests/test.sh
 ```
 <sub><sup>(Note: Policy constraints and constraint-templates have been adapted from the Gatekeeper Library and the EKS Best Practices Guide.)</sup></sub>
+
+Look at the output from the tests. In the first example, the deployment was created because it had no policy violations. Examples 2-13, however, were rejected because they violated the policy in the constraint templates. If countermeasures like this was in place from the beginning, our fictional attacker would have had a lot of trouble adding a privileged container to a pod.
 
 ---
 
@@ -78,3 +81,6 @@ spec:
 ## Additional Resources
 - [EKS Best Practices Guides](https://aws.github.io/aws-eks-best-practices/)
 - [EKS Best Practices Guides - Policy Samples](https://github.com/aws/aws-eks-best-practices/tree/master/policies)
+
+## Next Steps
+Now that you've added OPA/Gatekeeper to the cluster, let's explore how you can use seccomp to constrain the syscalls from a container. Click this [link](../security-profiles-operator) when you're ready to continue. 
