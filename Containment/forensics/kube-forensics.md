@@ -146,3 +146,6 @@ Events:                    <none>
 ```
 
 In the above output you can see the PodCheckpoint failed due to the Pod name not being found in the system.
+
+## Next Steps
+When you're finished experimenting with kube-forensics, click this [link](./README.md) to return to the page on isolating the attack. 
