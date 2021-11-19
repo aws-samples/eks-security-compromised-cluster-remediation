@@ -102,3 +102,6 @@ Before we can remove the static pod we must identify the node(s) running a stati
 
     Error from server (NotFound): pods "rship-ip-10-0-250-148.ec2.internal" not found
     ```
+
+## Next Steps
+Now that you've remediated the threat, it's time to implement countermeasures to insulate your cluster from future attacks. Click this [link](https://github.com/aws-samples/eks-security-compromised-cluster-remediation/tree/main/Implement_Countermeasures/gatekeeper) when you're ready to continue. 
