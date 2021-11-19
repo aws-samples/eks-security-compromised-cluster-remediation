@@ -182,7 +182,10 @@ In these two examples, we see information like `k8s.pod.name`, `k8s.ns.name`, `c
 
 ***
 
-# Next
+## Additional Resources
 Falcosidekick is a powerful threat response system with many integrations. We can leaverage it to quickly excute actions against bad applications, e.g. by deleting pods. Check out this blog series from the Falco Community [link](https://falco.org/blog/falcosidekick-response-engine-part-1-kubeless/) for more information. 
 
 ---
+
+## Congratulations
+Congratulations for completing the workhop! You've managed to thwart the ransomware attack, collected evidence for the authorities, and implemented a set of countermeasures to protect Octank against future attacks. We hope you found the time worthwhile and realize the importance of having a incident response plan. Like they say in the Scout's, "BE PREPARED!"
