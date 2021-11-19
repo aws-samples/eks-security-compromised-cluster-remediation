@@ -1,8 +1,6 @@
-## OPA/Gatekeeper
+# OPA/Gatekeeper
 
----
-
-### Preventative Controls
+## Preventative Controls
 Every change to a Kubernetes cluster is first stored in etcd, and only the API server modifies etcd; moreover, every change to a cluster goes through the API server. [Dynamic Admission Controllers](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/) are used to intercept API server requests, after they have been authenticated and authorized. `OPA/Gatekeeper` is used as a mutating and validating admission controller to mutate and validate API server requests before they result in changes to etcd and subsequent cluster changes. Using OPA/Gatekeeper policies, built using constraint templates and constraints, allows cluster operators and administrators to add `guardrails` to cluster operation, to prevent unwanted behaviors.
 
 In this section of the workshop, attendees will install OPA/Gatekeeper to the cluster, and sample policies that act as preventative controls, preventing unwanted behaviors from happening within the cluster. The sample policies enforce the following controls:
@@ -22,7 +20,7 @@ In this section of the workshop, attendees will install OPA/Gatekeeper to the cl
 
 ---
 
-### Installation
+## Installation
 ```bash
 helm repo add gatekeeper https://open-policy-agent.github.io/gatekeeper/charts
 helm upgrade -i --create-namespace gatekeeper gatekeeper/gatekeeper --namespace gatekeeper \
@@ -30,19 +28,19 @@ helm upgrade -i --create-namespace gatekeeper gatekeeper/gatekeeper --namespace 
 ```
 :point_right: The following two commands need to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/gatekeeper*
 
-### Install Constraint Templates
+## Install Constraint Templates
 
 ```bash
 kubectl apply -f constraint-templates/
 ```
 
-### Install Constraints
+## Install Constraints
 
 ```bash
 kubectl apply -f constraints/
 ```
 
-### Deinstallation
+## Deinstallation
 
 ```bash
 kubectl delete -f constraints/
@@ -50,7 +48,7 @@ kubectl delete -f constraint-templates/
 helm uninstall gatekeeper
 ```
 
-### Test
+## Test
 
 ```bash
 tests/test.sh
@@ -59,12 +57,12 @@ tests/test.sh
 
 ---
 
-### Deployment and Pod Policies
+## Deployment and Pod Policies
 A combination of Gatekeeper constraint templates and constraints are used to apply policies. [OPA Rego](https://www.openpolicyagent.org/docs/latest/policy-language/) is written into the constraint template. Multiple constraints can be used with a constraint template. 
 
 Both Deployment and Pod resource policies (constraint template and constraint combinations) have been added to this workshop. Applying policies to Deployment resources exposes immediate feedback to clients when they apply deployments, should the Deployment resource fail a policy. Pod policies are used to handle pods as well as handle resources that also create pods, such as Deployments and DaemonSets.
 
-### Targeting Kubernetes Namespaces with Gatekeeper Policies
+## Targeting Kubernetes Namespaces with Gatekeeper Policies
 Each constraint is currently set to target the `test` namespace. To change the target namespace(s), edit the `spec.match.namespaces` array element, in each constraint, to include the target namespaces for each constraint.
 ```yaml
 ...
@@ -77,8 +75,6 @@ spec:
 ...
 ``` 
 
----
-
-[EKS Best Practices Guides](https://aws.github.io/aws-eks-best-practices/)
-
-[EKS Best Practices Guides - Policy Samples](https://github.com/aws/aws-eks-best-practices/tree/master/policies)
+## Additional Resources
+- [EKS Best Practices Guides](https://aws.github.io/aws-eks-best-practices/)
+- [EKS Best Practices Guides - Policy Samples](https://github.com/aws/aws-eks-best-practices/tree/master/policies)
