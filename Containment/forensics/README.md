@@ -73,6 +73,9 @@ Since the script uploads content to an s3 bucket, the instance on which the scri
 }
 ```
 -->
+### kube-forensics (optional)
+kube-forensics obviates the need to specify the node on which the pod is running. Rather, you create a CRD with the pod's name and namespace and the controller will schedule the job on the appropriate node. If you're interested in seeing how kube-forensics works, click [here](./kube-forensics.md) to continue.
+
 ## Rescheduling unaffected pods onto other nodes
 
 Once you've cordoned the node, you can begin rescheduling all the unaffected pods running on the node onto other nodes in the cluster. You can do this a couple different ways. The first way is to delete the unaffected pods. A cordoned node it is marked as unscheduleable. Pods that are deleted from condoned nodes will be rescheduled onto other nodes in the cluster. The second way is to apply a toleration to the compromised pod and then apply a taint to the node. This will evict all pods without a toleration for the taint from the node. For this exercise, we will be cordoning the node and deleting the unaffected pods. 
