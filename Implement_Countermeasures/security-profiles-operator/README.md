@@ -1,10 +1,7 @@
 ## Security Profiles Operator
-
----
-
 Linux processes run in [Linux User Space](https://en.wikipedia.org/wiki/User_space), and use [Syscalls](https://man7.org/linux/man-pages/man2/syscalls.2.html) to access Kernel resources in [Linux Kernel Space](https://en.wikipedia.org/wiki/Linux_kernel). Following [least privilege](https://en.wikipedia.org/wiki/Principle_of_least_privilege) best practices, syscalls should be restricted to only those needed by an application.
 
-Secure computing mode, a.k.a. [seccomp](https://en.wikipedia.org/wiki/Seccomp) , is a Linux kernel feature that is used to restrict the syscalls available to the application/container.
+Secure computing mode, a.k.a. [seccomp](https://en.wikipedia.org/wiki/Seccomp), is a Linux kernel feature that is used to restrict the syscalls available to the application/container.
 
 In this section of the workshop, attendees will use the `Security Profiles Operator` to install seccomp profiles into the `seccomp-test` Kubernetes namespace, and apply the syscall-restricting profiles to pods running in the `seccomp-test` namespace. The `Security Profiles Operator` installs the seccomp profiles onto cluster nodes. Pods reference the seccomp profiles using the pod-spec `securityContext` element, seen below.
 
@@ -36,8 +33,10 @@ kubectl --namespace cert-manager wait --for condition=ready pod -l app.kubernete
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/security-profiles-operator/master/deploy/operator.yaml
 ```
 
-### Deinstallation
-(Note: Profiles cannot be deleted while still in use.)
+### Deinstallation (optional)
+Do not delete the operator until you've run through the examples below. 
+
+> Note: Profiles cannot be deleted while still in use.
 
 ```bash
 kubectl delete seccompprofiles --all --all-namespaces
@@ -93,7 +92,7 @@ type=SECCOMP msg=audit(1634920756.032:13211): auid=4294967295 uid=0 gid=101 ses=
 ...
 ```
 
-#### Clean-up:
+#### Clean-up
 
 :point_right: The following three commands need to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator*
 
@@ -276,7 +275,7 @@ kubectl -n seccomp-test get pod nginx-deny -o wide
 
 Verify that the NGINX container in the `nginx-deny` pod is running.
 
-#### Clean-up:
+### Clean-up:
 
 :point_right: The following three commands need to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator*
 
@@ -326,7 +325,7 @@ kubectl -n seccomp-test get pod nginx-allow -o wide
 
 Verify that the NGINX container in the `nginx-allow` pod is running.
 
-#### Clean-up:
+### Clean-up:
 
 :point_right: The following three commands need to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator*
 
