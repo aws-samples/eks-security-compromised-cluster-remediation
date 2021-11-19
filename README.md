@@ -39,7 +39,12 @@ Aside from this GitHub repository, feel free to use the [EKS Best Practices Guid
 Your first “hint” is to increase your visibility of the cluster and its configuration (or misconfiguration). We recommend using [FairwindsOps/polaris](https://github.com/FairwindsOps/polaris), an open source project from Fairwinds, but you can use another solution if you so choose. See [Detective Controls - EKS Best Practices Guides](https://aws.github.io/aws-eks-best-practices/security/docs/detective/) for a list of potential options.
 
 ## Workshop Flow
-The workshop is divided into different stages. In the [Identification](./Identification/attack-discovery) stage you will implement solutions that will increase your visibility of the cluster, its configuration, and the workloads that are running on it. The idea is to determine whether your cluster has been compromised and how. In the [Containment](./Containment/forensics) stage you will isolate the compromise and capture evidence from the environment that can be used in a forensics investigation. In the [Eradication and Recovery](./Eradication_Recovery) stage you will remediate the compromised pod and eliminate the threat to your cluster. And finally in the [Implement Countermeasures](./Implement_Countermeasures) stage you will take stock of what has happened and implement a set of security controls, e.g. OPA/Gatekeeper, Falco, and the Security Profiles Operator, to lower the odds of a recurrence. 
+The workshop is divided into 4 stages: 
+
+1. In the [Identification](./Identification/attack-discovery) stage you will implement solutions that will increase your visibility of the cluster, its configuration, and the workloads that are running on it. The idea is to determine whether your cluster has been compromised and how. 
+2. In the [Containment](./Containment/forensics) stage you will isolate the compromise and capture evidence from the environment that can be used in a forensics investigation. 
+3. In the [Eradication and Recovery](./Eradication_Recovery) stage you will remediate the compromised pod and eliminate the threat to your cluster. 
+4. And finally in the [Implement Countermeasures](./Implement_Countermeasures) stage you will take stock of what has happened and implement a set of security controls, e.g. OPA/Gatekeeper, Falco, and the Security Profiles Operator, to lower the odds of a recurrence. 
 
 ## Capture the flag challenge (optional)
 The attacker has left a message for you. If you want an additional challenge, find the attacker's bitcoin account number. 
@@ -77,6 +82,9 @@ Start this workshop by cloning this repository to your Cloud9 workspace.
 ```bash
 git clone https://github.com/aws-samples/eks-security-compromised-cluster-remediation.git
 ```
+### Prescriptive Guidance
+If you are not comfortable doing this on your own, you can work with a neighbor or follow the guidance that we've published to this repository. Start by going to the [Identification](./Identification/attack-discovery) stage. At the bottom of each page is a link to continue to the next step in the incident response plan described above. Good luck!
+
 ## Conclusion
 You should come away from this workshop with a better sense of: 
 
