@@ -345,3 +345,7 @@ kubectl delete -f profiles/ns.yaml
 
 [EKS Best Practices Guides](https://aws.github.io/aws-eks-best-practices/)
 
+### Next Steps
+In this section you've seen how you can use seccomp policies to restrict the syscalls a container can issue to the underlying kernel. The profile operator's primary responsibility in this workshop is to deploy seccomp policies onto each of the worker nodes in the cluster so they can be referenced in a pod's securityContext. When controls like seccomp are systematically applied to your containers, it makes it harder for an attacker to exploit both known and unknown vulnerabilities. 
+
+When you're ready, click this [link](../falco) to continue to the section on Falco. 
