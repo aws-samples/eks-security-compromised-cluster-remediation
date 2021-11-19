@@ -157,7 +157,7 @@ kubectl port-forward svc/falco-falcosidekick-ui  8080:2802 -n falco
 
 Connect to `https://localhost:8080/ui` from the browser. On the dashboard, you should see a summary for all Falco events captured on EKS Cluster: some events were generated from the EKS nodes where suspicious activities were detected. Other events are surfaced in the dashboard under `Launch Sensitive Mount Container` and `Terminal shell in container`.
 
-Note: kubectl port-forward does not return. You can open a browser instance by clicking preview --> preview running application in Cloud9 IDE to browse the Falco Sidekick UI dashboard.
+> Note: kubectl port-forward does not return. You can open a browser within Cloud9 by clicking **Preview/Preview running application**. If the dashboard doesn't appear, append `/ui` to the end of the URL. 
 
 ***
 
