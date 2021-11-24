@@ -23,7 +23,9 @@ Before we can remove the static pod we must identify the node(s) running a stati
 
     ```bash
     kubectl get pod -o wide --all-namespaces
+    ```
 
+    ```
     NAMESPACE           NAME                                 READY   STATUS    RESTARTS   AGE     IP             NODE                           NOMINATED NODE   READINESS GATES
     sock-shop           carts-844bf95d46-6jj4t               1/1     Running   0          19h     10.0.188.63    ip-10-0-191-117.ec2.internal   <none>           <none>
     sock-shop           carts-db-6c6c68b747-45q45            1/1     Running   0          19h     10.0.175.174   ip-10-0-179-247.ec2.internal   <none>           <none>
@@ -47,8 +49,10 @@ Before we can remove the static pod we must identify the node(s) running a stati
     This command will report pods where a host-name using the Amazon EC2 private DNS naming convention has been appended to the pod name.
     
     ```bash
-    kubectl get pod --all-namespaces | grep -E -o '\s+[a-z].*-ip-[0-9]{1,3}\-[0-9]{1,3}\-[0-9]{1,3}\-[0-9]{1,3}.ec2.internal\b'
+    kubectl get pod --all-namespaces | grep -E -o '\s+[a-z].*ip-[0-9]{1,3}\-[0-9]{1,3}\-[0-9]{1,3}\-[0-9]{1,3}\.(ec2|.*\.compute)\.internal\b'
+    ```
 
+    ```
     rship-ip-10-0-250-148.ec2.internal
     ```
 
@@ -58,7 +62,9 @@ Before we can remove the static pod we must identify the node(s) running a stati
     kubectl -n sock-shop delete pod rship-ip-10-0-250-148.ec2.internal
 
     kubectl -n sock-shop get pods rship-ip-10-0-250-148.ec2.internal -o wide
+    ```
 
+    ```
     NAME                                 READY   STATUS    RESTARTS   AGE    IP            NODE                           NOMINATED NODE   READINESS GATES
     rship-ip-10-0-250-148.ec2.internal   1/1     Running   0          129m   10.0.250.35   ip-10-0-250-148.ec2.internal   <none>           <none>
     ```
@@ -93,13 +99,17 @@ Before we can remove the static pod we must identify the node(s) running a stati
 
     After saving the file, in your Cloud9 terminal you can run the script with this command
 
-    `/bin/bash ./rm-static-pods.sh`
+    ```bash
+    /bin/bash ./rm-static-pods.sh
+    ```
 
 3. Verify the static pod has been deleted. The shell script should end by displaying all running pods in the cluster. You can confirm that the static pod was deleted by reviewing the output of the shell script, or use `kubectl` to get the static pod name identified in step #1.
 
     ```bash
     kubectl -n sock-shop get pod rship-ip-10-0-250-148.ec2.internal
+    ```
 
+    ```
     Error from server (NotFound): pods "rship-ip-10-0-250-148.ec2.internal" not found
     ```
 
