@@ -1,7 +1,53 @@
+image:
+  repository: falcosecurity/falco
+
+docker:
+  enabled: true
+  socket: /var/run/docker.sock
+
+containerd:
+  enabled: false
+  socket: /run/containerd/containerd.sock
+
+# This InitContainer will build eBPF probe for the current AMI version.
+
+extraInitContainers:
+  - name: driver-loader
+    image: docker.io/falcosecurity/falco-driver-loader:latest
+    imagePullPolicy: Always
+    volumeMounts:
+      - mountPath: /host/proc
+        name: proc-fs
+        readOnly: true
+      - mountPath: /host/boot
+        name: boot-fs
+        readOnly: true
+      - mountPath: /host/lib/modules
+        name: lib-modules
+      - mountPath: /host/usr
+        name: usr-fs
+        readOnly: true
+      - mountPath: /host/etc
+        name: etc-fs
+        readOnly: true
+      - mountPath: /root/.falco
+        name: driver-fs
+    env:
+      - name: FALCO_BPF_PROBE
+        value:
+
+extraVolumes:
+  - name: driver-fs
+    emptyDir: {}
+
+extraVolumeMounts:
+  - mountPath: /root/.falco
+    name: driver-fs
 
 ebpf:
   # Enable eBPF support for Falco
   enabled: true
+  path:
 
   settings:
     # Needed to enable eBPF JIT at runtime for performance reasons.
@@ -34,7 +80,6 @@ falco:
   programOutput:
     enabled: true
     keepAlive: false
-    # Push findings to falcosidekick service
     program: "curl -d @- falco-falcosidekick:2801/"
 
 falcosidekick:
