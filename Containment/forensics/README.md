@@ -120,8 +120,8 @@ In addition to this SG, you will also need to make the following changes to the 
 
 Applying these changes will allow the compromised node to continue communicating the with EKS control plane but will prevent it from communicating with other nodes in the cluster. We're allowing the node to communicate with the control plane so as not to alert the attacker. 
 
-## Challenge
-Find the attacker's Bitcoin account number
+## Capture the Flag Challenge (optional)
+Find the attacker's Bitcoin account number and decrypt it before deleting the compromised pod(s). 
 
 ## Additional Resources
 
