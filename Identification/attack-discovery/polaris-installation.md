@@ -60,10 +60,10 @@ The Polaris default standards are rather high, so don’t be surprised if your s
 
     ![Polaris Dashboard](./images/Polaris-dashboard-2.png)
 
-## Challenge
+## Capture the Flag Challenge
 Use the information you were able to glean from querying the Kubernetes audit log together with the information from Polaris to find the compromised pod. 
 
-## Additional Information:
+## Additional Information
 - [Polaris](https://polaris.docs.fairwinds.com/)
 
 ## Next Steps
