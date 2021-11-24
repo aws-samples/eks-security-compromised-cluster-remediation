@@ -28,7 +28,7 @@ eksctl completion bash >> ~/.bash_completion
 . /etc/profile.d/bash_completion.sh
 . ~/.bash_completion
 ```
-
+<!---
 Setting default region for rest of commands to work without needing `--region` flag
 
 ```bash
@@ -38,7 +38,7 @@ AWS Secret Access Key [None]:
 Default region name [None]: us-west-2
 Default output format [None]: json
 ```
-
+--->
 ## Installation process
 
 1. If you don't already have a kubernetes namespace named amazon-cloudwatch, create one by using the following command:
