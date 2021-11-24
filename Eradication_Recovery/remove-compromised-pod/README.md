@@ -15,7 +15,7 @@ We will start by reviewing the current manifest for the RabbitMQ deployment. You
 
 `kubectl -n sock-shop get deployment rabbitmq -o yaml`
 
-Notice that the `image:`, `command:`, and `securityContext:`elements are incorrect and will need to be changed or removed. We have remove some lines here for readability.
+Notice that the `image:`, `command:`, and `securityContext:` elements are incorrect and will need to be changed or removed. We have remove some lines here for readability.
 
 ```yaml
 apiVersion: apps/v1
