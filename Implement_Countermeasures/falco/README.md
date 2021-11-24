@@ -58,6 +58,8 @@ If eBPF probe was not published for your AMI version, we can either:
  - create a Pull Request on [falcosecurity/test-infra](https://github.com/falcosecurity/test-infra) to add the missing eBPF version
  - Use Bottlereocket instead as it has eBPF probe available by default
 
+In this workshop, we will use an InitContainer to build the eBPF probe using `falcosecurity/falco-driver-loader:latest`
+
 ## Install Falco Helm Chart
 From the Cloud9 workspace: 
 
@@ -70,13 +72,66 @@ helm install falco falcosecurity/falco -n falco -f values.yaml
 All the necessary customizations are in the values.yaml files.
 
 ```yaml
+image:
+  repository: falcosecurity/falco
+
+docker:
+  enabled: true
+  socket: /var/run/docker.sock
+
+containerd:
+  enabled: false
+  socket: /run/containerd/containerd.sock
+
+# This InitContainer will build eBPF probe for the current AMI version.
+
+extraInitContainers:
+  - name: driver-loader
+    image: docker.io/falcosecurity/falco-driver-loader:latest
+    imagePullPolicy: Always
+    volumeMounts:
+      - mountPath: /host/proc
+        name: proc-fs
+        readOnly: true
+      - mountPath: /host/boot
+        name: boot-fs
+        readOnly: true
+      - mountPath: /host/lib/modules
+        name: lib-modules
+      - mountPath: /host/usr
+        name: usr-fs
+        readOnly: true
+      - mountPath: /host/etc
+        name: etc-fs
+        readOnly: true
+      - mountPath: /root/.falco
+        name: driver-fs
+    env:
+      - name: FALCO_BPF_PROBE
+        value:
+
+extraVolumes:
+  - name: driver-fs
+    emptyDir: {}
+
+extraVolumeMounts:
+  - mountPath: /root/.falco
+    name: driver-fs
+
 ebpf:
   # Enable eBPF support for Falco
   enabled: true
+  path:
+
+  settings:
+    # Needed to enable eBPF JIT at runtime for performance reasons.
+    # Can be skipped if eBPF JIT is enabled from outside the container
+    hostNetwork: false
 
 auditLog:
-  #  Activate the K8s Audit Log feature for Falco
+  # true here activates the K8s Audit Log feature for Falco
   enabled: true
+
 
 falco:
   # The location of the rules file(s). This can contain one or more paths to
@@ -88,22 +143,19 @@ falco:
     - /etc/falco/rules.d
   # - /etc/falco/rules.optional.d
  
-  # Use json format for output events.
   jsonOutput: true
   jsonIncludeOutputProperty: true
   jsonIncludeTagsProperty: true
   logStderr: true
   logSyslog: true
-  logLevel: info
+  logLevel: debug
   priority: debug
-  
-  # Push findings to falcosidekick service
+
   programOutput:
     enabled: true
     keepAlive: false
     program: "curl -d @- falco-falcosidekick:2801/"
 
-# Deploy Falcosideckick 
 falcosidekick:
   enabled: true
   replicaCount: 2
@@ -117,7 +169,6 @@ falcosidekick:
     requests:
       cpu: 15m
       memory: 96Mi
-# Use Falcosideckick UI to show falco events
   webui:
     enabled: true
     service:
