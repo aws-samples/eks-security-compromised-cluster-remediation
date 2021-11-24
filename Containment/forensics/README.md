@@ -97,7 +97,7 @@ while read -d, -r pair; do
 done <<<"$pods,"
 ```
 
-## (Optional) Isolating the node
+## Isolating the node (optional)
 
 If you suspect that the node has been compromised, you can isolate it from other nodes by changing its security group. Since Kubernetes version 1.14 and platform version eks.3, a cluster security security group is created by default. This security group allows traffic to flow freely between the control plane and managed node groups. To isolate the compromised node create a security group with the following rules: 
 
@@ -121,7 +121,7 @@ In addition to this SG, you will also need to make the following changes to the 
 Applying these changes will allow the compromised node to continue communicating the with EKS control plane but will prevent it from communicating with other nodes in the cluster. We're allowing the node to communicate with the control plane so as not to alert the attacker. 
 
 ## Capture the Flag Challenge (optional)
-Find the attacker's Bitcoin account number and decrypt it before deleting the compromised pod(s). 
+Find the attacker's Bitcoin account number and [decrypt it](https://www.openssl.org/docs/man1.1.1/man1/openssl-rsautl.html) before deleting the compromised pod(s). 
 
 ## Additional Resources
 
