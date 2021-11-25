@@ -22,9 +22,10 @@ In this section of the workshop, attendees will install OPA/Gatekeeper to the cl
 
 ## Installation
 ```bash
+cd ~/environment/eks-security-compromised-cluster-remediation/Implement_Countermeasures/gatekeeper
 helm repo add gatekeeper https://open-policy-agent.github.io/gatekeeper/charts
 helm upgrade -i --create-namespace gatekeeper gatekeeper/gatekeeper --namespace gatekeeper \
---set release=v3.6.0
+     --set release=v3.6.0
 ```
 :point_right: The following two commands need to be executed from the following folder: *eks-security-compromised-cluster-remediation/Implement_Countermeasures/gatekeeper*
 
@@ -66,7 +67,10 @@ A combination of Gatekeeper constraint templates and constraints are used to app
 Both Deployment and Pod resource policies (constraint template and constraint combinations) have been added to this workshop. Applying policies to Deployment resources exposes immediate feedback to clients when they apply deployments, should the Deployment resource fail a policy. Pod policies are used to handle pods as well as handle resources that also create pods, such as Deployments and DaemonSets.
 
 ## Targeting Kubernetes Namespaces with Gatekeeper Policies
-Each constraint is currently set to target the `test` namespace. To change the target namespace(s), edit the `spec.match.namespaces` array element, in each constraint, to include the target namespaces for each constraint.
+Each constraint is currently written to target the `test` namespace. To change the target namespace(s), edit the `spec.match.namespaces` array element, in each constraint, to include the target namespaces for each constraint.
+
+You can find the constraints files in the `constraints` directory, located under `eks-security-compromised-cluster-remediation/Implement_Countermeasures/gatekeeper`.
+
 ```yaml
 ...
 spec:
