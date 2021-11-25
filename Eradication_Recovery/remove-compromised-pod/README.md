@@ -139,7 +139,9 @@ The `--record` flag included in the `kubectl apply` command will cause the comma
 
 ```bash
 kubectl -n sock-shop rollout history deployment rabbitmq
+```
 
+```
 deployment.apps/rabbitmq
 REVISION  CHANGE-CAUSE
 1         <none>
@@ -152,7 +154,9 @@ You can verify the change was successful by using the following commands:
 
 ```bash
 kubectl -n sock-shop get deployment rabbitmq -o wide
+```
 
+```
 NAME       READY   UP-TO-DATE   AVAILABLE   AGE     CONTAINERS                   IMAGES                                               SELECTOR
 rabbitmq   1/1     1            1           4d14h   rabbitmq,rabbitmq-exporter   rabbitmq:3.6.8-management,kbudde/rabbitmq-exporter   name=rabbitmq
 ```
@@ -161,7 +165,9 @@ Get the rabbitmq pod based on the pod selector. Note the age should reflect the 
 
 ```bash
 kubectl -n sock-shop get pods --selector name=rabbitmq
+```
 
+```
 NAME                        READY   STATUS    RESTARTS   AGE   IP            NODE                           NOMINATED NODE   READINESS GATES
 rabbitmq-57dd566589-4mmmd   2/2     Running   0          1m   10.0.189.60   ip-10-0-191-117.ec2.internal   <none>           <none>
 ```
@@ -170,7 +176,9 @@ Get the pod spec using the pod name. You can confirm that the image and security
 
 ```bash
 kubectl -n sock-shop get pods <POD_NAME> -o yaml
+```
 
+```
 apiVersion: v1
 kind: Pod
 metadata:

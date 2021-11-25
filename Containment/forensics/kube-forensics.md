@@ -37,11 +37,13 @@ Begin by cloning the Git repository for kube-forensics
 git clone https://github.com/keikoproj/kube-forensics.git
 ```
 
-Change directoies to `/kube-forensics` and build the solution. For example:
+Change directories to `/kube-forensics` and build the solution. For example:
 
-```sh
-$ cd kube-forensics
-$ make deploy
+```bash
+cd kube-forensics
+make deploy
+```
+```
 /Users/tekenstam/go/bin/controller-gen "crd:trivialVersions=true" rbac:roleName=manager-role webhook paths="./..." output:crd:artifacts:config=config/crd/bases
 kubectl apply -f config/crd/bases
 customresourcedefinition.apiextensions.k8s.io/podcheckpoints.forensics.keikoproj.io configured
@@ -101,19 +103,26 @@ spec:
 -->
 ### Submit & Verify
 
-``` sh
-$ kubectl apply -f ./config/samples/forensics_v1alpha1_podcheckpoint.yaml
+```bash
+kubectl apply -f ./config/samples/forensics_v1alpha1_podcheckpoint.yaml
+
+```
 podcheckpoint.forensics.keikoproj.io/podcheckpoint-sample created
 
-$ kubectl get -n forensics-system PodCheckpoint
+```bash
+kubectl get -n forensics-system PodCheckpoint
+```
+```
 NAME                   AGE
 podcheckpoint-sample   33s
 ```
 
 Check the state of the PodCheckpoint.
 
-```sh
-$ kubectl describe PodCheckpoint -n forensics-system podcheckpoint-sample
+```bash
+kubectl describe PodCheckpoint -n forensics-system podcheckpoint-sample
+```
+```
 Name:         podcheckpoint-sample
 Namespace:    forensics-system
 Labels:       <none>
