@@ -73,7 +73,7 @@ Before we can remove the static pod we must identify the node(s) running a stati
 
     ```bash
     #!/bin/bash
-    instances=$(kubectl get nodes -o json | grep providerID | awk -F '/' '{print $NF}' | sed "s/\"//g" | tr '\n' ' ')
+    instances=$(kubectl get nodes -o json | jq -r '.items | map(.spec.providerID | split("/")[4]) | join(" ")')
     echo "Worker Node Instance IDs:"
     echo $instances
 
