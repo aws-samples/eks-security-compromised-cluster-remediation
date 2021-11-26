@@ -65,7 +65,7 @@ Since the script uploads content to an s3 bucket, the instance on which the scri
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "VisualEditor0",q
+            "Sid": "VisualEditor0",
             "Effect": "Allow",
             "Action": [
                 "s3:PutObject",
@@ -87,6 +87,7 @@ Once you've cordoned the node, you can begin rescheduling all the unaffected pod
 You can use the following bash script to delete the unaffected pods from the node. Be sure to replace the placeholder values `<POD_NAME>` and `<NODE_NAME>` before running the script. 
 
 ```bash
+#!/bin/bash
 BAD_POD=<POD_NAME>
 pods=$(kubectl get pods --all-namespaces -o jsonpath='{range .items[*]}{.metadata.name}{"="}{.metadata.namespace}{","}{end}' --field-selector spec.nodeName=<NODE_NAME>)
 
