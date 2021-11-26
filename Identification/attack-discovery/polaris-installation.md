@@ -54,7 +54,7 @@ The Polaris default standards are rather high, so don’t be surprised if your s
 ## Interpret the results from the Dashboard
 1. You can use the "Results by Category" dropdown to select the namespaces that you want to filter on.  The following example shows a filter applied to the **privileged** namespace.
 
-    ![Polaris Dashboard - Filter](./images/Polaris-dashboard-3.png)
+    ![Polaris Dashboard - Filter](./images/Fairwinds_Polaris_Filter.png)
 
 2. Once the filter is applied, you can see a summary that is color coded to identify the concerns ( if any ). The following screen grab shows the areas of concern with the "X" mark in "red" color.
 
