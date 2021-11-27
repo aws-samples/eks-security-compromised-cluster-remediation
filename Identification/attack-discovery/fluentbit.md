@@ -16,32 +16,9 @@ In this workshop you will install Fluent Bit as a DaemonSet and configure it to 
 | /aws/containerinsights/Cluster-Name/host        | Logs from /var/log/dmesg, /var/log/secure, and /var/log/messages                        |
 | /aws/containerinsights/Cluster-Name/dataplan    | The logs in /var/log/journal for kubelet.service, kubeproxy.service, and docker.service |
 
-## Prerequisites
-
-[eksctl](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html) is used to easily configure IAM Roles for Service Accounts (IRSA) in the cluster. The following commands will install eksctl locally in your Cloud9 Environment.
-
-```bash
-curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-sudo mv -v /tmp/eksctl /usr/local/bin
-eksctl version
-eksctl completion bash >> ~/.bash_completion
-. /etc/profile.d/bash_completion.sh
-. ~/.bash_completion
-```
-<!---
-Setting default region for rest of commands to work without needing `--region` flag
-
-```bash
-aws configure
-AWS Access Key ID [None]:
-AWS Secret Access Key [None]:
-Default region name [None]: us-west-2
-Default output format [None]: json
-```
---->
 ## Installation process
 
-1. If you don't already have a kubernetes namespace named amazon-cloudwatch, create one by using the following command:
+1. If you don't already have a Kubernetes namespace named `amazon-cloudwatch`, create one by using the following command:
 
    ```bash
    kubectl apply -f https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/cloudwatch-namespace.yaml
@@ -61,7 +38,7 @@ Default output format [None]: json
    https://oidc.eks.us-east-1.amazonaws.com/id/EXAMPLE61013F13DDF959BD02B192F31
    ```
 
-   The following command will now create am IAM service account named `fluent-bit` in the `amazon-cloudwatch` NameSpace of the `security-workshop` cluster.
+   The following command will now create am IAM service account named `fluent-bit` in the `amazon-cloudwatch` namespace of the `security-workshop` cluster.
 
    ```shell
    eksctl create iamserviceaccount \
@@ -75,23 +52,16 @@ Default output format [None]: json
 
 3. Run the following command to create a ConfigMap named cluster-info with the cluster name and the region to send logs. Replace cluster-name and cluster-region with your cluster's name and Region.
 
-   ```bash
-   #set the following environment variables using the appropriate ClusterName and RegionName
-    ClusterName=security-workshop
-    RegionName=`curl -s http://169.254.169.254/latest/meta-data/placement/region`
-    FluentBitHttpPort='2020'
-    FluentBitReadFromHead='On'
-    FluentBitHttpServer='On'
-
+    ```bash
     kubectl create configmap fluent-bit-cluster-info \
-          --from-literal=cluster.name=${ClusterName} \
-          --from-literal=http.server=${FluentBitHttpServer} \
-          --from-literal=http.port=${FluentBitHttpPort} \
-          --from-literal=read.head=${FluentBitReadFromHead} \
-          --from-literal=read.tail=${FluentBitReadFromTail} \
-          --from-literal=logs.region=${RegionName} \
-          -n amazon-cloudwatch
-   ```
+            --from-literal=cluster.name=security-workshop \
+            --from-literal=http.server=On \
+            --from-literal=http.port=2020 \
+            --from-literal=read.head=On \
+            --from-literal=read.tail=On \
+            --from-literal=logs.region=$AWS_REGION \
+            -n amazon-cloudwatch
+    ```
 
 4. Download and deploy the Fluent Bit daemonset manifest to the cluster by running the following command:
 
@@ -103,7 +73,7 @@ Default output format [None]: json
 
    | Resource Kind      | Resource Name           | Resource Use                                                                           |
    | ------------------ | ----------------------- | -------------------------------------------------------------------------------------- |
-   | NameSpace          | amazon-cloudwatch       | contains fluent-bit resources                                                          |
+   | Namespace          | amazon-cloudwatch       | contains fluent-bit resources                                                          |
    | DaemonSet          | fluent-bit              | Contains the Pods that run Fluent Bit                                                  |
    | ConfigMap          | fluent-bit-config       | Contains the configuration to be used by Fluent Bit.                                   |
    | ServiceAccount     | fluent-bit              | Used to run Fluent Bit                                                                 |
@@ -142,17 +112,17 @@ The attacker has left a message for you in the logs. Try to find it before conti
 
 - If you don't see these log groups and are looking in the correct Region, check the logs of the Fluent Bit DaemonSet pods to look for the error. You can do this by running:
 
-  ```
-  kubectl logs fluent-bit-{unique-id}
-  ```
+    ```
+    kubectl logs fluent-bit-{unique-id} -n amazon-cloudwatch
+    ```
 
 - If you see errors related to IAM permissions, check the IAM role attached to the cluster nodes or fluent-bit IAM service account.
 
 - If the pod status is CreateContainerConfigError, get the exact error by running the following command:
 
-  ```
-  kubectl describe pod {pod_name} -n amazon-cloudwatch
-  ```
+   ```
+   kubectl describe pod {pod_name} -n amazon-cloudwatch
+   ```
 
 ## Additional Information
 

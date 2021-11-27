@@ -32,20 +32,24 @@ We've created an SSM Document that incorporates the functionality of kube-forens
     --document-type Command \
     --document-format JSON \
     --target-type /AWS::EC2::Instance
-    --region us-west-2
     ```
 
-3. Run the Document against an instance by executing the following command. Replace the placeholder values (INSTANCE_ID, NAMESPACE, and POD_NAME) with the actual values before running this command.
+3. Run the Document against an instance by executing the following command. Set the environment variables (INSTANCE_ID, NAMESPACE, and POD_NAME) to the actual values.
+   You can obtain the EC2 instance ID by running `kubectl get node <NODE_NAME> -o json | jq -r .spec.providerID | cut -d / -f 5`.
 
     ```bash
+    # You will need to set these to the target instance ID, namespace, and pod_name first.
+    INSTANCE_ID=...
+    NAMESPACE=...
+    POD_NAME=...
+
     aws ssm send-command --document-name "forensics-capture" --document-version "1" \
-    --targets '[{"Key":"InstanceIds","Values":["INSTANCE_ID"]}]' \
-    --parameters '{"Verbose":["-v"],"TimeoutSeconds":["3600"],"Namespace":["NAMESPACE"],"PodName":["POD_NAME"],"DestinationBucket":["'$FORENSICS_S3_BUCKET'"],"ClusterName":["security-workshop"]}' \
+    --targets '[{"Key":"InstanceIds","Values":["'$INSTANCE_ID'"]}]' \
+    --parameters '{"Verbose":["-v"],"TimeoutSeconds":["3600"],"Namespace":["'$NAMESPACE'"],"PodName":["'$POD_NAME'"],"DestinationBucket":["'$FORENSICS_S3_BUCKET'"],"ClusterName":["security-workshop"]}' \
     --timeout-seconds 600 \
     --max-concurrency "50" \
     --max-errors "0" \
-    --output-s3-bucket-name "$FORENSICS_S3_BUCKET" \
-    --region us-west-2
+    --output-s3-bucket-name "$FORENSICS_S3_BUCKET"
     ```
 
 > The **DestinationBucket** and **output-s3-bucket-name** have been set to the environment variable `FORENSICS_S3_BUCKET` for you. 
@@ -78,19 +82,19 @@ kube-forensics obviates the need to specify the node on which the pod is running
 
 ## Rescheduling unaffected pods onto other nodes
 
-Once you've cordoned the node, you can begin rescheduling all the unaffected pods running on the node onto other nodes in the cluster. You can do this a couple different ways. The first way is to delete the unaffected pods. A cordoned node it is marked as unscheduleable. Pods that are deleted from condoned nodes will be rescheduled onto other nodes in the cluster. The second way is to apply a toleration to the compromised pod and then apply a taint to the node. This will evict all pods without a toleration for the taint from the node. For this exercise, we will be cordoning the node and deleting the unaffected pods. 
+Once you've cordoned the node, you can begin rescheduling all the unaffected pods running on the node onto other nodes in the cluster. You can do this a couple different ways. The first way is to delete the unaffected pods. A cordoned node is marked as unschedulable. Pods that are deleted from condoned nodes will be rescheduled onto other nodes in the cluster. The second way is to apply a toleration to the compromised pod and then apply a taint to the node. This will evict all pods without a toleration for the taint from the node. For this exercise, we will be cordoning the node and deleting the unaffected pods.
 
 You can use the following bash script to delete the unaffected pods from the node. Be sure to replace the placeholder values `<POD_NAME>` and `<NODE_NAME>` before running the script. 
 
 ```bash
 #!/bin/bash
-export BAD_POD=<POD_NAME>
+BAD_POD=<POD_NAME>
 pods=$(kubectl get pods --all-namespaces -o jsonpath='{range .items[*]}{.metadata.name}{"="}{.metadata.namespace}{","}{end}' --field-selector spec.nodeName=<NODE_NAME>)
 
 while read -d, -r pair; do
   IFS='=' read -r key val <<<"$pair"
   if [ $BAD_POD != "$key" ]; then
-    kubectl delete po "$key" -n "$val"
+    kubectl delete pod "$key" -n "$val"
   else
     echo skipping bad pod
   fi
