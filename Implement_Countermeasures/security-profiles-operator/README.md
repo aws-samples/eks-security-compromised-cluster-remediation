@@ -148,7 +148,7 @@ type=SECCOMP msg=audit(1634920756.032:13211): auid=4294967295 uid=0 gid=101 ses=
 ...
 ```
 
-#### Clean-up:
+#### Clean-up
 
 ```bash
 cd ~/environment/eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator/
@@ -210,7 +210,7 @@ Error: failed to start container "block-all-container": Error response from daem
 ...
 ```
 
-#### Clean-up:
+#### Clean-up
 
 ```bash
 cd ~/environment/eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator/
@@ -261,7 +261,7 @@ kubectl -n seccomp-test get pod nginx-deny -o wide
 
 Verify that the NGINX container in the `nginx-deny` pod is running.
 
-### Clean-up:
+### Clean-up
 
 ```bash
 cd ~/environment/eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator/
@@ -312,7 +312,7 @@ kubectl -n seccomp-test get pod nginx-allow -o wide
 
 Verify that the NGINX container in the `nginx-allow` pod is running.
 
-### Clean-up:
+### Clean-up
 
 ```bash
 cd ~/environment/eks-security-compromised-cluster-remediation/Implement_Countermeasures/security-profiles-operator/
