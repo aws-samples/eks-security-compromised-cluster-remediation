@@ -14,7 +14,7 @@ In this workshop you will install Fluent Bit as a DaemonSet and configure it to 
 | ----------------------------------------------- | --------------------------------------------------------------------------------------- |
 | /aws/containerinsights/Cluster-Name/application | All log files in /var/log/containers                                                    |
 | /aws/containerinsights/Cluster-Name/host        | Logs from /var/log/dmesg, /var/log/secure, and /var/log/messages                        |
-| /aws/containerinsights/Cluster-Name/dataplan    | The logs in /var/log/journal for kubelet.service, kubeproxy.service, and docker.service |
+| /aws/containerinsights/Cluster-Name/dataplane   | The logs in /var/log/journal for kubelet.service, kubeproxy.service, and docker.service |
 
 ## Installation process
 
@@ -26,7 +26,7 @@ In this workshop you will install Fluent Bit as a DaemonSet and configure it to 
 
 2. The Fluent Bit daemon will need permission to access CloudWatch. We will create an IAM Role for the fluent-bit service account and permit that service account full access to CloudWatch.
 
-   You will need two components in the cluster in order to map IAM role policies to a service account running the Fluent Bit DaemonSet. First, we will verify there is an OpenID Connect (OIDC) provider for our cluster. We have already configured an OIDC provider for your cluster. We can confirm with the following command.
+   You will need two components in the cluster in order to map IAM role policies to the service account used by the Fluent Bit DaemonSet. First, we will verify there is an OpenID Connect (OIDC) provider for our cluster. We can confirm with the following command.
 
    ```
    aws eks describe-cluster --name security-workshop --query "cluster.identity.oidc.issuer" --output text
@@ -50,7 +50,7 @@ In this workshop you will install Fluent Bit as a DaemonSet and configure it to 
    --approve
    ```
 
-3. Run the following command to create a ConfigMap named cluster-info with the cluster name and the region to send logs. Replace cluster-name and cluster-region with your cluster's name and Region.
+3. Run the following command to create a ConfigMap named cluster-info with the cluster name and the region to send logs. Set `logs.region` to your cluster's  Region (us-west-2).
 
     ```bash
     kubectl create configmap fluent-bit-cluster-info \
