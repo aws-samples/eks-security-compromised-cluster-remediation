@@ -1,13 +1,13 @@
 # eks-security-workshop
 ## Scenario
-As a security engineer at Octank, a global conglomerate, you are responsible for overseeing the security of the compute environment. This includes the computing resources that have been provisioned in the AWS cloud. 
+As a security engineer at Octank, a global conglomerate, you are responsible for protecting their compute environment. This includes the virtual machines that have been provisioned in the AWS cloud. 
 
-Octank recently launched a new e-commerce site for selling socks. The site, along with all of its dependencies, runs on an EKS cluster in the AWS cloud.  The cluster was initially built and configured without your involvement. Your manager has asked to you verify that the environment meets Octanks stringent security standards. 
+Octank recently launched a new e-commerce site for selling socks. The site, along with all of its dependencies, runs on an EKS cluster in an AWS VPC.  The cluster was initially built and configured without your involvement. The CISO has asked to you verify that the environment meets Octanks stringent security standards. 
 
-Octank has been an appealing target for hackers in the past because of its popularity with consumers and its enormous wealth. You are concerned that the cluster was misconfigured, increasing the probability of a breach. You suspect that the cluster has already been compromised. Your job now is to: 
+Octank has been an appealing target for hackers in the past because of its popularity with consumers. You are concerned that the cluster was accidentally misconfigured and you know that Octant can ill-afford a breach. While you have no proof at this time, you suspect that the cluster has already been compromised. Your job now is to: 
 
 1. Review the security posture of the cluster
-2. Find and isolate the breach
+2. Find and isolate the breach as fast as possible
 3. Formulate a theory about how or why it occurred
 4. Collect evidence for a forensic investigation
 5. Eliminate the threat to the environment
@@ -16,12 +16,10 @@ Octank has been an appealing target for hackers in the past because of its popul
 ## The environment
 For this workshop, you will be given access to an AWS account with an EKS cluster. You will access that cluster through a Cloud9 workspace. A slightly modified version of the e-commerce application, [Sock Shop](https://microservices-demo.github.io/), has been deployed to the cluster and the EKS control plane logs have been enabled. Your first priority is to find and isolate the attack. 
 
-The Cloud9 workspace has been granted administrative access to the Kubernetes API and is able to start SSH sessions with all the worker nodes in the cluster. An S3 bucket for storing forensic data has also been created and is exposed via the $FORENSICS_S3_BUCKET environment variable.
+The Cloud9 workspace has been granted administrative access to the Kubernetes API and is able to establish SSH sessions with all the worker nodes in the cluster. An S3 bucket for storing forensic data has also been created and is exposed via the $FORENSICS_S3_BUCKET environment variable.
 
 ### The cluster
-An EKS cluster has been provisioned in the us-west-2 region. The cluster's 3 worker nodes are distributed across 3 private subnets in the cluster VPC and are part of a [managed node group](https://docs.aws.amazon.com/eks/latest/userguide/managed-node-groups.html). The cluster API endpoint, i.e. the Kubernetes API, is accessible from within the VPC and the Internet. Access to the API server is secured using a combination of AWS Identity and Access Management (IAM) and native Kubernetes Role Based Access Control (RBAC). 
-
-The cluster is accessible from a Cloud9 workspace which has already been provisioned for you. You'll find the workspace under "Shared with you" in the Cloud9 console. 
+An EKS cluster has been provisioned in the us-west-2 region. The cluster's 3 worker nodes are distributed across 3 private subnets in the cluster VPC and are part of a [managed node group](https://docs.aws.amazon.com/eks/latest/userguide/managed-node-groups.html). The cluster API endpoint, i.e. the Kubernetes API, is accessible from within the VPC and from the Internet. Access to the API server is secured using a combination of AWS Identity and Access Management (IAM) and native Kubernetes Role Based Access Control (RBAC). 
 
 ### The application
 Sock Shop is a e-commerce application that consists of a multitude of microservices. The application's front-end is exposed as a LoadBalanced service and is accessible from the Internet. The services communicate with each other as depicted in this diagram:
@@ -29,14 +27,14 @@ Sock Shop is a e-commerce application that consists of a multitude of microservi
 ![](./images/app-architecture.png)
 
 ## Instructions
-The bulk of this workshop is unguided in that you will decide how to respond to the unfolding security incident at Octank. The workshop’s proctors will be available to periodically give you clues when needed or you can look at the workshop’s [GitHub](https://github.com/aws-samples/eks-security-compromised-cluster-remediation) repository for additional guidance. Once you’ve isolated and/or eliminated the threat from the cluster, you can follow the directions for implementing a few countermeasures that will enhance the security posture of your EKS cluster. This includes implementing OPA Gatekeeper, Falco and Falco Sidekick, and the Security Policy controller.
+This workshop is meant to be "unguided" in that you can decide how to respond to the unfolding security incident at Octank. The workshop’s proctors will be available to periodically give you clues when needed. If you prefer a guided experience, you can use the step-by-step instructions found in this [GitHub](https://github.com/aws-samples/eks-security-compromised-cluster-remediation) repository. Once you’ve isolated and/or eliminated the threat from the cluster, you can follow the directions for implementing a few countermeasures that will enhance the security posture of your EKS cluster. This includes implementing OPA/Gatekeeper, Falco and Falco Sidekick, and the Security Policy controller.
 
 You will have approximately 2 hours to complete the workshop. 
 
 ## Resources & hints
 Aside from this GitHub repository, feel free to use the [EKS Best Practices Guide for Security](https://aws.github.io/aws-eks-best-practices/security/docs/), the official Kubernetes documentation, or other external resources for ideas about how to respond. 
 
-Your first “hint” is to increase your visibility of the cluster and its configuration (or misconfiguration). We recommend using [FairwindsOps/polaris](https://github.com/FairwindsOps/polaris), an open source project from Fairwinds, but you can use another solution if you so choose. See [Detective Controls - EKS Best Practices Guides](https://aws.github.io/aws-eks-best-practices/security/docs/detective/) for a list of potential options.
+Your first “hint” is to increase your visibility of the cluster and its configuration (or misconfiguration). We offer instructions for [FairwindsOps/polaris](https://github.com/FairwindsOps/polaris), an open source project from Fairwinds, but you can use another solution if you so choose. See [Detective Controls - EKS Best Practices Guides](https://aws.github.io/aws-eks-best-practices/security/docs/detective/) for a list of potential options.
 
 ## Workshop Flow
 The workshop is divided into 4 stages: 
