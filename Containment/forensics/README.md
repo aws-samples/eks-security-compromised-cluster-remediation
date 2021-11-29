@@ -101,7 +101,7 @@ while read -d, -r pair; do
 done <<<"$pods,"
 ```
 
-Execute the script by running `./delete-pods.sh`.
+Execute the script by running `./delete-pods.sh` from the directory where the file was saved.
 
 ## Isolating the node (optional)
 
