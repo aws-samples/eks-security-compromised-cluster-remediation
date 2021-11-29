@@ -84,7 +84,7 @@ kube-forensics obviates the need to specify the node on which the pod is running
 
 Once you've cordoned the node, you can begin rescheduling all the unaffected pods running on the node onto other nodes in the cluster. You can do this a couple different ways. The first way is to delete the unaffected pods. A cordoned node is marked as unschedulable. Pods that are deleted from condoned nodes will be rescheduled onto other nodes in the cluster. The second way is to apply a toleration to the compromised pod and then apply a taint to the node. This will evict all pods without a toleration for the taint from the node. For this exercise, we will be cordoning the node and deleting the unaffected pods.
 
-You can use the following bash script to delete the unaffected pods from the node. Be sure to replace the placeholder values `<POD_NAME>` and `<NODE_NAME>` before running the script. 
+You can use the following bash script to delete the unaffected pods from the node. Be sure to replace the placeholder values `<POD_NAME>` and `<NODE_NAME>` before running the script. In your Cloud9 environment you can create a new file by selecting "New File" from the "File" menu. Copy and paste the shell script into the new file, then save the file with the name `delete-pods.sh`.
 
 ```bash
 #!/bin/bash
@@ -100,6 +100,8 @@ while read -d, -r pair; do
   fi
 done <<<"$pods,"
 ```
+
+Execute the script by running `./delete-pods.sh`.
 
 ## Isolating the node (optional)
 
