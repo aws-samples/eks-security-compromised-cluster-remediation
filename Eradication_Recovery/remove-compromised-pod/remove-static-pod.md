@@ -5,6 +5,8 @@ A Static Pod is a normal Kubernetes Pod that has been configured directly on a c
 
 When a static pod is created, the kubelet will create a "mirror" pod on the Kubernetes API server for each static pod. The kubelet will suffix the mirror pod's name with the hostname of the node where the static pod is running. Mirror pods make the static pods visible in the cluster. However, you are unable to use `kubectl` and API Server constructs to manage a static pod.
 
+> Static pods are disabled by default on EKS. We purposely enabled them for this workshop. 
+
 The kubelet monitors a configured path for addition or removal of pod manifest files. When a pod manifest is added to the directory, the kubelet with start the pod and create a mirror pod on the API Server. Removing the manifest file will cause the kubelet to delete the associated pod and mirror pod.
 
 More information about static pods can be found in the [Kubernetes documentation](https://kubernetes.io/docs/tasks/configure-pod-container/static-pod/ "static pod documentation").
