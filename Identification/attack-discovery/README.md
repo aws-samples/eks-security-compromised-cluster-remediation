@@ -1,11 +1,11 @@
 # CloudWatch Logs Insights
 CloudWatch Logs Insights enables you to interactively search and analyze your log data in Amazon CloudWatch Logs, including the Kubernetes Audit log. The audit log, part of the EKS Control Plane logs, keeps a record of the calls issued against Kubernetes API server. Aside from logging the API call, the audit log reveals the ID of the caller. This can be particularly useful during a forensics investigation where you're trying to determine who did what and when. 
 
-Using Log Insights, you can perform queries to help you more efficiently and effectively respond to operational issues. If an issue occurs, you can use CloudWatch Logs Insights to identify potential causes and validate deployed fixes.
+With Log Insights you can perform queries to help you more efficiently and effectively respond to operational issues or security incidents. For example, when an issue occurs, you can use CloudWatch Logs Insights to quickly identify potential causes and validate deployed fixes.
 
-CloudWatch Logs Insights includes a purpose-built query language with a few simple but powerful commands. CloudWatch Logs Insights provides sample queries, command descriptions, query autocompletion, and log field discovery to help you get started. Sample queries are included for several types of AWS service logs.
+CloudWatch Logs Insights uses a purpose-built query language that consists of a few simple yet powerful commands. To help you get started, CloudWatch Logs Insights includes sample queries, command descriptions, query autocompletion, and log field discovery directly within the console. In fact, you'll find sample queries for several types of AWS service logs.
 
-A single request can query up to 20 log groups. Queries time out after 15 minutes, if they have not completed. Query results are available for 7 days.
+A single request can query up to 20 log groups. Queries that have not completed after 15 minutes will automatically time-out. Query results are available for 7 days.
 
 You can save queries that you have created. This can help you run complex queries when you need, without having to re-create them each time that you want to run them.
 
@@ -25,7 +25,7 @@ To run a CloudWatch Logs Insights sample query
 
 6. Choose Run. The results of the query appear. In this example, the results are the most recent 20 log events of any type. CloudWatch Logs also displays a bar graph of log events in this log group over time. This bar graph shows the distribution of events in the log group that matches your query and time range, not just the events displayed in the table.
 
-7. To see all fields of one of the returned log events, choose the icon to the left of that log event.
+7. To see all fields of one of the returned log events, click the icon to the left of that log event.
 
 ## Create and Run a CloudWatch Logs Insights query to discover privileged pods
 1. Open the CloudWatch console at https://console.aws.amazon.com/cloudwatch/.
@@ -47,8 +47,8 @@ To run a CloudWatch Logs Insights sample query
     ```
 
     ![Sample Query](./images/sample_query.png)
-<!--- Getting some deletes in the result set, though I'm not sure why -->
-6. The results show the log events that were received by CloudWatch Logs that contain logs from the kube-api-server as it created, updated and patched privileged pods. i.e. any pods that were created through a deployment or a pod manifest and has any of the following attributes in its specification.
+
+6. The results will show the log events that match the query from the previous step, i.e. all events related to pods being created, updated, or patched and have following attributes in its specification.
 
     * privileged: true
     * hostNetwork:true
