@@ -27,7 +27,7 @@ The output is uploaded to the destination S3 bucket.
 
 You must have cluster administrator access to deploy kube-forensics to a running cluster.
 
-1. Insure your `KUBECONFIG` and current context correctly points to the desired cluster.
+1. Ensure your `KUBECONFIG` and current context correctly points to the desired cluster.
 1. Checkout kube-forensics repository
 1. Change directory into the root of the repository
 1. Run `make deploy`
