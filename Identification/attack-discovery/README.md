@@ -36,7 +36,7 @@ To run a CloudWatch Logs Insights sample query
 
 4. (Optional) Use the time selector at the upper right to select the time period that you want to query.
 
-5. In the query editor, delete the query that is currently shown, enter the following, and then choose **Run**. 
+5. In the query editor, delete the query that is currently shown, enter the following, and then choose **Run**.
 
     ```
     fields requestURI, verb
@@ -48,7 +48,7 @@ To run a CloudWatch Logs Insights sample query
 
     ![Sample Query](./images/sample_query.png)
 
-6. The results will show the log events that match the query from the previous step, i.e. all events related to pods being created, updated, or patched and have following attributes in its specification.
+6. The results will show the log events that match the query from the previous step, i.e. all events related to pods being created, updated, or patched and have following attributes in its specification. If no results are returned, try increasing the timeframe and re-run the query. 
 
     * privileged: true
     * hostNetwork:true
