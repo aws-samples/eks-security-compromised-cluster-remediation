@@ -88,7 +88,7 @@
             "#copy files to an S3 bucket",
             "for file in ${local_dest_dir}/*",
             "do",
-            "  sudo aws s3 cp ${file} s3://${DEST_BUCKET}/${SUBPATH}/${timestamp}_${NAMESPACE}_${POD_NAME}/ --acl bucket-owner-full-control",
+            "  sudo aws s3 cp ${file} s3://${DEST_BUCKET}/${SUBPATH}/${timestamp}_${NAMESPACE}_${POD_NAME}/ --acl bucket-owner-full-control --no-progress",
             "done",
 
             "#cleanup",
